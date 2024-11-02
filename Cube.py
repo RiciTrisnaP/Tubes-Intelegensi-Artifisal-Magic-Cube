@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import math
 
 class Cube:
     def __init__(self, n):
@@ -21,28 +22,155 @@ class Cube:
         self.data[pos1[0],pos1[1],pos1[2]] = self.data[pos2[0],pos2[1],pos2[2]]
         self.data[pos2[0],pos2[1],pos2[2]] = temp
     
+    def calculate_value(self):
+        return self.calculate_column_value() + self.calculate_row_value() + self.calculate_height_value() + self.calculate_side_diagonal_value() + self.calculate_space_diagonal_value()
+
+    def calculate_column_value(self):
+        total = 0
+        for i in range(self.n):
+            for y in range(self.n):
+                sum = 0
+                for z in range(self.n):
+                    sum += self.data[i,y,z]
+                if sum == self.magic_number:
+                    total += 1
+        return total
+    
+    def calculate_row_value(self):
+        total = 0
+        for i in range(self.n):
+            for z in range(self.n):
+                sum = 0
+                for y in range(self.n):
+                    sum += self.data[i,y,z]
+                if sum == self.magic_number:
+                    total += 1
+        return total
+
+    def calculate_height_value(self):
+        total = 0
+        for y in range(self.n):
+            for z in range(self.n):
+                sum = 0
+                for i in range(self.n):
+                    sum += self.data[i,y,z]
+                if sum == self.magic_number:
+                    total += 1
+        return total
+
+    def calculate_side_diagonal_value(self):
+        # cuma berlaku 5x5x5
+        total = 0
+        for z in range(self.n):
+            sum = 0;       
+            for i in range(self.n):
+                sum +=  self.data[z, i, i]
+            if sum == self.magic_number:
+                total += 1
+
+            sum = 0
+            for y in range(self.n):
+                sum += self.data[z,y, (self.n - 1)-y]
+            if sum == self.magic_number:
+                total += 1
+
+        for y in range(self.n):
+            sum = 0;       
+            for z in range(self.n):
+                sum +=  self.data[z, y, z]
+            if sum == self.magic_number:
+                total += 1
+            
+            sum = 0
+            for i in range(self.n):
+                sum += self.data[(self.n - 1)-i, y, i]
+            if sum == self.magic_number:
+                total += 1
+            
+        for i in range(self.n):
+            sum = 0;       
+            for y in range(self.n):
+                sum +=  self.data[y,y,i]
+            if sum == self.magic_number:
+                total += 1
+            
+            sum = 0
+            for z in range(self.n):
+                sum += self.data[z,(self.n - 1)-z, i]
+            if sum == self.magic_number:
+                total += 1
+
+        return total
+
+    def calculate_space_diagonal_value(self):
+        total = 0
+
+        sum = 0
+        for i in range(self.n):
+            sum += self.data[i,i,i]
+        if sum == self.magic_number:
+            total += 1
+        # print(sum)
+        
+        sum = 0
+        for i in range(self.n):
+            sum += self.data[i,(self.n - 1)-i, i]
+        if sum == self.magic_number:
+            total += 1
+        # print(sum)
+
+        sum = 0
+        for i in range(self.n):
+            sum += self.data[i, i, (self.n - 1)-i]
+        if sum == self.magic_number:
+            total += 1
+        # print(sum)
+
+        sum = 0
+        for i in range(self.n):
+            sum += self.data[i, (self.n - 1)-i, (self.n - 1)-i]
+        if sum == self.magic_number:
+            total += 1
+        # print(sum)
+        
+        # print(total)
+        return total
 
 
-class stochastic_hill_climbing:
+class simulated_annealing:
     def __init__(self, n):
         self.cube = Cube(n)
-    
-    def main_shc(self,nmax):
-        for i in range(nmax):
-            end = self.compare_state(self.generate_random_point(), self.generate_random_point())
+        self.t = 100
+        self.minimum_prob = 0.9
+
+    def main_sa(self):
+        temp = self.t
+
+        while temp > 0:
+            end = self.compare_state(self.generate_random_point(), self.generate_random_point(), temp)
             if end :
                 # print(self.cube.data)
                 break
-    
-    def compare_state(self,pos1,pos2):
+            temp = temp * 0.95
+
+        # for i in range(self.t, 0, -0.2):
+        #     end = self.compare_state(self.generate_random_point(), self.generate_random_point(), i)
+        #     if end :
+        #         # print(self.cube.data)
+        #         break
+
+    def compare_state(self,pos1,pos2, time_value):
         current_value = self.calculate_value()
         self.cube.swap(pos1,pos2)
         neighbor_value = self.calculate_value()
 
-        print("pos1 : " , pos1 , "  pos2: ", pos2 , "  current value : " , current_value , ", neighbor value" , neighbor_value)
+        print("pos1 : " , pos1 , "  pos2: ", pos2 , "time value", time_value, "  current value : " , current_value , ", neighbor value" , neighbor_value)
 
-        if current_value >= neighbor_value:
+        if current_value > neighbor_value:
             self.cube.swap(pos1,pos2)
+            chance = self.calculate_prob(current_value, neighbor_value, time_value)
+            if chance > self.minimum_prob:
+                self.cube.swap(pos1,pos2)
         
         return neighbor_value == 109
 
@@ -52,6 +180,14 @@ class stochastic_hill_climbing:
             value = random.randint(0, self.cube.n - 1)  # Generate a random value
             generated_point.append(value)
         return generated_point
+
+    def calculate_prob(self, c_value, n_value, t_value):
+        prob = 0
+        delta_E = n_value - c_value
+        prob = math.exp(delta_E/t_value)
+        print(prob)
+        return prob
+
 
     def calculate_value(self):
         return self.calculate_column_value() + self.calculate_row_value() + self.calculate_height_value() + self.calculate_side_diagonal_value() + self.calculate_space_diagonal_value()
@@ -168,9 +304,113 @@ class stochastic_hill_climbing:
             return total
 
 
+class genetic_algorithm:
+    def __init__(self, population_size, nmax, n):
+        self.population_size = population_size
+        self.nmax = nmax
+        self.n = n
+        self.population = []
+        for i in range(population_size):
+            self.population.append(Cube(n))
+        
+    
+    def main_ga(self):
+        for i in range(self.nmax):
+            parent_population = []
+            IsEnd, population_strip = self.generate_random_selection_probability()
 
+            if IsEnd:
+                break
+
+            for individu in range(self.population_size):
+                rand = random.uniform(0,100)
+                # print (rand)
+                n = 0
+                for strip in population_strip:
+                    if strip >= rand :
+                        parent_population.append(self.population[n])
+                        # print(n)
+                        break
+                    n += 1
+
+            for i in range (0, self.population_size, 2):
+                cx1, cx2 = self.crossover(parent_population[i], parent_population[i+1])
+                parent_population[i].data = cx1.reshape(5,5,5)  
+                parent_population[i+1].data = cx2.reshape(5,5,5)
+
+            for individu in parent_population:
+                temp = self.mutation(individu.data)
+                temp = np.array(temp)
+                individu.data = temp.reshape(5,5,5)
+            
+            self.population = parent_population
+        
+    def generate_random_selection_probability(self):
+        population_value = []
+        total = 0
+        IsEnd = False
+
+        for i in self.population:
+            temp = i.calculate_value()
+            population_value.append(temp)
+            total += temp
+            if temp == 105:
+                IsEnd = True
+
+        print(population_value)
+        last_strip_percentage = 0
+        population_strip = []
+        for i in population_value:
+            tmp = i/total * 100
+            population_strip.append(last_strip_percentage + (tmp))
+            last_strip_percentage += tmp
+        print(population_strip)
+        return IsEnd, population_strip
+
+    def crossover(self, parent1, parent2):
+        temp1 = parent1.data.reshape(125)
+        temp2 = parent2.data.reshape(125)
+
+        middle_index = random.randint(0, 125) 
+
+        offspring1 = np.concatenate((temp1[:middle_index], temp2[middle_index:]))
+        offspring2 = np.concatenate((temp2[:middle_index], temp1[middle_index:]))
+
+        # Print the results
+        return offspring1, offspring2
+
+    def mutation(self, parent):
+        original_array = parent.reshape(125)
+
+        n = self.n**3
+
+        # Buat set untuk melacak angka yang sudah ada
+        existing_numbers = set()
+        result_array = []
+
+        # Tambahkan angka unik ke result_array
+        for num in original_array:
+            if num in existing_numbers:
+                result_array.append(None)  # Tempat penampung untuk angka yang kembar
+            else:
+                result_array.append(num)
+                existing_numbers.add(num)
+
+        # Temukan angka yang hilang dari 1 hingga n
+        missing_numbers = set(range(1, n + 1)) - existing_numbers
+
+        # Ganti None dengan angka yang hilang
+        missing_numbers = iter(sorted(missing_numbers))  # Urutkan angka yang hilang
+        for i in range(len(result_array)):
+            if result_array[i] is None:
+                result_array[i] = next(missing_numbers)
+
+        return result_array
+        
+        
     
 # Example usage
-random_cube = stochastic_hill_climbing(5)
+random_cube = simulated_annealing(5)
 
-random_cube.main_shc(3)
+random_cube.main_sa()
+# random_cube.main_sa()
