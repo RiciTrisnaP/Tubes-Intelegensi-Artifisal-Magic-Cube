@@ -1,0 +1,2 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/Dimas/Documents/GitHub/Tubes-Intelegensi-Artifisal-Magic-Cube/media/videos/scene/480p15/partial_movie_files/CubeWithNumbers/2880834341_2872334167_3429797636.mp4'
