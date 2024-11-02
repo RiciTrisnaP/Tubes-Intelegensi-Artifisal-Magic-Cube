@@ -1,7 +1,36 @@
 from manim import *
 
-class CreateCircle(Scene):
+class CubeWithNumbers(ThreeDScene):
     def construct(self):
-        circle = Circle()  # create a circle
-        circle.set_fill(PINK, opacity=0.5)  # set the color and transparency
-        self.play(Create(circle))  # show the circle on screen
+        # Set up the camera orientation
+        self.set_camera_orientation(phi=0 * DEGREES, theta=1000 * DEGREES)
+        
+        # Parameters for the small cubes
+        side_length = 0.9  # Side length of each smaller cube
+        spacing = 1.0      # Spacing between cubes
+
+        # Create the 3x3x3 grid of cubes with numbers
+        cubes = VGroup()  # Group to hold all small cubes
+
+        count = 1  # Start numbering from 1
+        for x in range(-1, 2):
+            for y in range(-1, 2):
+                for z in range(-1, 2):
+                    # Create a small cube
+                    small_cube = Cube(side_length=side_length, fill_opacity=0.7)
+                    small_cube.shift(x * spacing * RIGHT + y * spacing * UP + z * spacing * OUT)
+                    
+                    # Create a number for the small cube
+                    number = Text(str(count), font_size=24, color=WHITE)
+                    number.move_to(small_cube.get_center())  # Position the number at the center of the cube
+                    
+                    # Group the cube and its number together
+                    small_cube_with_number = VGroup(small_cube, number)
+                    cubes.add(small_cube_with_number)  # Add to the group of all cubes
+                    
+                    count += 1  # Increment the number for the next cube
+
+        # Animate the entire group of cubes
+        self.add(cubes)  # Add the group to the scene
+        self.begin_ambient_camera_rotation(rate=0.2, about="theta")  # Rotate the camera around the cubes
+        self.wait(5)
