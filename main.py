@@ -13,7 +13,10 @@ def main():
     # stochastic_cube = StochasticHillClimbing(5, 10000)
     # stochastic_cube.solve()
 
-    stochastic_cube = HillClimbingSearchSteepestAscent(5)
+    # stochastic_cube = HillClimbingSidewaysMove(5, 20)
+    # stochastic_cube.solve()
+
+    stochastic_cube = HillClimbingSearch(5)
     stochastic_cube.solve()
 
     end_time = time.time() 
