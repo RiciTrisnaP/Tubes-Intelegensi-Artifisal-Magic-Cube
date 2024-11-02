@@ -22,3 +22,6 @@ class StochasticHillClimbing:
             self.cube.swap(pos1, pos2)
         
         return neighbor_value == 109
+    
+    def print_value(self):
+        self.cube.print_value()
