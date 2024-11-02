@@ -1,9 +1,18 @@
 from manim import *
+from manim import Cube as C
+import time
+from algorithm.StochasticHillClimbing import *
+from algorithm.GeneticAlgorithm import *
+from algorithm.HillClimbingSearch import *
+from algorithm.HillClimbingSearchSteepestAscent import *
+from algorithm.HillClimbingSidewaysMove import *
+from algorithm.RandomRestartHillClimbing import *
+from algorithm.SimulatedAnnealing import *
 
 class CubeWithNumbers(ThreeDScene):
     def construct(self):
         # Set up the camera orientation
-        self.set_camera_orientation(phi=30 * DEGREES, theta=0 * DEGREES, gamma=90 * DEGREES)
+        self.set_camera_orientation(phi=30 * DEGREES, theta=0 * DEGREES, gamma=90 * DEGREES, frame_center=[0,1,0])
         
         # Parameters for the small cubes
         side_length = 0.6  # Side length of each smaller cube
@@ -12,17 +21,24 @@ class CubeWithNumbers(ThreeDScene):
         # Create the 3x3x3 grid of cubes with numbers
         cubes = VGroup()  # Group to hold all small cubes
         cube_dict = {}    # Dictionary to store cube positions for easy access
+
+        # init = Cube(5).data
+        # list_swap = [[1, 83]]
         
-        count = 1  # Start numbering from 1
-        for x in range(-1, 4):
-            for y in range(-1, 4):
-                for z in range(-1, 4):
+        stochastic_cube = HillClimbingSearchSteepestAscent(5)
+        list_swap, init = stochastic_cube.solve()
+        
+         # Start numbering from 1
+        count = 0
+        for x in range(0, 5):
+            for y in range(0, 5):
+                for z in range(0, 5):
                     # Create a small cube
-                    small_cube = Cube(side_length=side_length, fill_opacity=0.7)
+                    small_cube = C(side_length=side_length, fill_opacity=0.7)
                     small_cube.shift(x * spacing * RIGHT + y * spacing * UP + z * spacing * OUT)
                     
                     # Create a number for the small cube
-                    number = Text(str(count), font_size=18, color=WHITE)
+                    number = Text(str(init[x][y][z]), font_size=18, color=WHITE)
                     number.move_to(small_cube.get_center())
                     
                     # Group the cube and its number together
@@ -39,32 +55,35 @@ class CubeWithNumbers(ThreeDScene):
         self.begin_ambient_camera_rotation(rate=0, about="phi")
         self.wait(2)
         
-        # Example of swapping cubes (let's swap cube 1 and cube 27)
-        cube1 = cube_dict[5]
-        cube27 = cube_dict[105]
         
-        # Store original positions
-        pos1 = cube1.get_center()
-        pos27 = cube27.get_center()
+        for swap_points in list_swap:
         
-        # Create the swapping animation
-        # First, move cube1 up and out
-        self.play(
-            cube1.animate.shift(UP * 1.5 + OUT * 1.5),
-            run_time=0.5
-        )
-        
-        # Move cube27 to cube1's position
-        self.play(
-            cube27.animate.move_to(pos1),
-            run_time=0.5
-        )
-        
-        # Finally, move cube1 to cube27's original position
-        self.play(
-            cube1.animate.move_to(pos27),
-            run_time=0.5
-        )
-        
-        # Wait at the end to show the final configuration
-        self.wait(3)
+            # Example of swapping cubes (let's swap cube 1 and cube 27)
+            cubeA = cube_dict[swap_points[0]]
+            cubeB = cube_dict[swap_points[1]]
+            
+            # Store original positions
+            posA = cubeA.get_center()
+            posB = cubeB.get_center()
+            
+            # Create the swapping animation
+            # First, move cubeA up and out
+            
+            # Move cubeB to cubeA's position
+            self.play(
+                cubeB.animate.move_to(posA),
+                run_time=0.5
+            )
+            
+            # Finally, move cubeA to cubeB's original position
+            self.play(
+                cubeA.animate.move_to(posB),
+                run_time=0.5
+            )
+            
+            temp = cube_dict[swap_points[0]]
+            cube_dict[swap_points[0]] = cube_dict[swap_points[1]]
+            cube_dict[swap_points[1]] = temp
+            
+            # Wait at the end to show the final configuration
+            self.wait(1)

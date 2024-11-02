@@ -8,7 +8,10 @@ class HillClimbingSearchSteepestAscent:
     def solve(self):
         current_value = self.cube.calculate_value()
         print(f"Initial Value: {current_value}")
-
+        
+        initial_config = self.cube.data
+        list_swap_points = []
+        
         while True:
             max_value = current_value
             max_pos1 = None
@@ -31,14 +34,19 @@ class HillClimbingSearchSteepestAscent:
                         found_better = True
 
                     self.cube.swap(pos1, pos2)
+                    
 
             if found_better:
                 self.cube.swap(max_pos1, max_pos2)
                 current_value = max_value
                 print(f"Moved to new position with value: {current_value}")
+                
+                list_swap_points.append([self.from_3dpos_to_linearpos(max_pos1), self.from_3dpos_to_linearpos(max_pos2)])
             else:
                 print("No further improvement found.")
-                break 
+                break
+        
+        return list_swap_points, initial_config
 
     def linearpos_to_3dpos(self, num):
         i = num // (self.n**2)
@@ -46,6 +54,10 @@ class HillClimbingSearchSteepestAscent:
         k = (num % (self.n**2)) % self.n
         return [i, j, k]
 
+    
+    def from_3dpos_to_linearpos(self,pos):
+        return pos[0] * (self.n**2) + pos[1] * (self.n) + pos[2]
+    
     
     def print_value(self):
         self.cube.print_value()

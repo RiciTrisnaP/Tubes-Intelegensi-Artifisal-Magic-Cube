@@ -17,12 +17,13 @@ def main():
     # stochastic_cube.solve()
 
     stochastic_cube = HillClimbingSearchSteepestAscent(5)
-    stochastic_cube.solve()
+    list_swap, init = stochastic_cube.solve()
 
-    cube = SimulatedAnnealing(5,100)
-    cube.print_value()
-    cube.solve()
-    cube.print_value()
+    print(list_swap)
+    # cube = SimulatedAnnealing(5,100)
+    # cube.print_value()
+    # cube.solve()
+    # cube.print_value()
 
     end_time = time.time() 
 
