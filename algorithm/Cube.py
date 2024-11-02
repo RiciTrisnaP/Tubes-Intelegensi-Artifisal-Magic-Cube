@@ -91,3 +91,9 @@ class Cube:
 
     def generate_random_point(self):
         return [random.randint(0, self.n - 1) for _ in range(3)]
+    
+    def print_value(self):
+        for i in range (self.n):
+            for j in range (self.n):
+                for k in range (self.n):
+                    print(self.data[i,j,k],end=" ")

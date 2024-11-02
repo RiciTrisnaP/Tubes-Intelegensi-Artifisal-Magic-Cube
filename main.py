@@ -16,8 +16,10 @@ def main():
     # stochastic_cube = HillClimbingSidewaysMove(5, 20)
     # stochastic_cube.solve()
 
-    stochastic_cube = HillClimbingSearch(5)
-    stochastic_cube.solve()
+    cube = SimulatedAnnealing(5,100)
+    cube.print_value()
+    cube.solve()
+    cube.print_value()
 
     end_time = time.time() 
 

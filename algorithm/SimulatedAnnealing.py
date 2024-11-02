@@ -41,3 +41,6 @@ class SimulatedAnnealing:
                 return
             else:
                 self.cube.swap(pos1, pos2)
+
+    def print_value(self):
+        self.cube.print_value()

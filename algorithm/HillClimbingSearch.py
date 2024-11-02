@@ -45,4 +45,7 @@ class HillClimbingSearch:
         j = (num % (self.n**2)) // self.n 
         k = num % self.n
         return [i, j, k]
+    
+    def print_value(self):
+        self.cube.print_value()
 
