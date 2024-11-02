@@ -8,6 +8,9 @@ class HillClimbingSearch:
     def solve(self):
         current_value = self.cube.calculate_value()
         print(f"Initial Value: {current_value}")
+        
+        initial_config = self.cube.data
+        list_swap_points = []
 
         while True:
             better_found = False
@@ -29,17 +32,23 @@ class HillClimbingSearch:
                     self.cube.swap(pos1, pos2)
 
                 if better_found:
+                    list_swap_points.append([self.from_3dpos_to_linearpos(pos1), self.from_3dpos_to_linearpos(pos2)])
                     break
 
             if not better_found:
                 print("No further improvement found. Terminating search.")
                 break
+        
+        return list_swap_points, initial_config
 
     def linearpos_to_3dpos(self, num):
         i = num // (self.n**2)
         j = (num % (self.n**2)) // self.n 
         k = (num % (self.n**2)) % self.n
         return [i, j, k]
+    
+    def from_3dpos_to_linearpos(self,pos):
+        return pos[0] * (self.n**2) + pos[1] * (self.n) + pos[2]
     
     def print_value(self):
         self.cube.print_value()

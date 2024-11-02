@@ -7,14 +7,18 @@ class SimulatedAnnealing:
         self.iterations = iterations
         self.initial_temperature = initial_temperature
         self.cooling_rate = cooling_rate
+        self.list_swap_points = []
     
     def solve(self):
+        initial_config = self.cube.data
         for i in range(self.iterations):
             T = self.temperature(i)
             if T == 0:
                 break
             print("Temp: ", T)
             self.compare_state(self.cube.generate_random_point(), self.cube.generate_random_point(), T)
+        
+        return self.list_swap_points, initial_config
 
     def temperature(self, i):
         return self.initial_temperature * pow(self.cooling_rate, i) 
@@ -41,6 +45,10 @@ class SimulatedAnnealing:
                 return
             else:
                 self.cube.swap(pos1, pos2)
+                self.list_swap_points.append([self.from_3dpos_to_linearpos(pos1), self.from_3dpos_to_linearpos(pos2)])
+    
+    def from_3dpos_to_linearpos(self,pos):
+        return pos[0] * (self.n**2) + pos[1] * (self.n) + pos[2]
 
     def print_value(self):
         self.cube.print_value()

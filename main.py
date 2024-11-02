@@ -10,6 +10,9 @@ from algorithm.SimulatedAnnealing import *
 def main():
     start_time = time.time()
 
+    # cube = RandomRestartHillClimbing(5,3)
+    # cube.solve()
+    # cube.print_value()
     # stochastic_cube = StochasticHillClimbing(5, 10000)
     # stochastic_cube.solve()
 

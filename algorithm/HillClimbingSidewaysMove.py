@@ -10,6 +10,9 @@ class HillClimbingSidewaysMove:
         current_value = self.cube.calculate_value()
         print(f"Initial Value: {current_value}")
         sideways_moves_count = 0
+        
+        initial_config = self.cube.data
+        list_swap_points = []
 
         while True:
             max_value = current_value
@@ -17,6 +20,9 @@ class HillClimbingSidewaysMove:
             max_pos2 = None
             found_better = False
             sideways_moves = []
+            
+            initial_config = self.cube.data
+            list_swap_points = []
 
             for i in range(self.n**3):
                 for j in range(i + 1, self.n**3):
@@ -42,6 +48,8 @@ class HillClimbingSidewaysMove:
                 current_value = max_value
                 print(f"Moved to new position with value: {current_value}")
                 # sideways_moves_count = 0 
+                
+                list_swap_points.append([self.from_3dpos_to_linearpos(max_pos1), self.from_3dpos_to_linearpos(max_pos2)])
             elif sideways_moves:
                     best_pos1, best_pos2 = sideways_moves[0]
                     self.cube.swap(best_pos1, best_pos2)
@@ -54,12 +62,17 @@ class HillClimbingSidewaysMove:
             else:
                 print("No further improvement found.")
                 break
+        
+        return list_swap_points, initial_config
 
     def linearpos_to_3dpos(self, num):
         i = num // (self.n**2)
         j = (num % (self.n**2)) // self.n 
         k = (num % (self.n**2)) % self.n
         return [i, j, k]
+    
+    def from_3dpos_to_linearpos(self,pos):
+        return pos[0] * (self.n**2) + pos[1] * (self.n) + pos[2]
     
     def print_value(self):
         self.cube.print_value()
