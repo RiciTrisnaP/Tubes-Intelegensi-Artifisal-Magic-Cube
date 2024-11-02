@@ -90,4 +90,4 @@ class Cube:
         return total
 
     def generate_random_point(self):
-        return [random.randint(0, self.n - 1) for _ in range(self.n)]
+        return [random.randint(0, self.n - 1) for _ in range(3)]
