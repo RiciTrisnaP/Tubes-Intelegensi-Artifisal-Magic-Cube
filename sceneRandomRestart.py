@@ -90,3 +90,5 @@ class CubeWithNumbers(ThreeDScene):
                 
                 # Wait at the end to show the final configuration
                 self.wait(1)
+                
+            self.remove(cubes)
