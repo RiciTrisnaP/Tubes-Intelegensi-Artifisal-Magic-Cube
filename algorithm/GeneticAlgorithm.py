@@ -1,103 +1,110 @@
-from algorithm.Cube import *
+import numpy as np
+import random
+from algorithm.Cube import Cube
 
 class GeneticAlgorithm:
-    def __init__(self, population_size, nmax, n):
+    def __init__(self, population_size, nmax, n, elite_count=1, crossover_rate=0.8, mutation_rate=0.1):
         self.population_size = population_size
         self.nmax = nmax
         self.n = n
-        self.population = []
-        for i in range(population_size):
-            self.population.append(Cube(n))
+        self.elite_count = elite_count
+        self.crossover_rate = crossover_rate
+        self.mutation_rate = mutation_rate
+        self.population = [Cube(n) for _ in range(population_size)]
         
     def main_ga(self):
-        for i in range(self.nmax):
+        for gen in range(self.nmax):
             parent_population = []
             IsEnd, population_strip = self.generate_random_selection_probability()
 
             if IsEnd:
                 break
 
-            for individu in range(self.population_size):
-                rand = random.uniform(0,100)
-                # print (rand)
-                n = 0
-                for strip in population_strip:
-                    if strip >= rand :
-                        parent_population.append(self.population[n])
-                        # print(n)
-                        break
-                    n += 1
+            sorted_population = sorted(self.population, key=lambda x: x.calculate_value(), reverse=True)
+            new_population = sorted_population[:self.elite_count]
 
-            for i in range (0, self.population_size, 2):
-                cx1, cx2 = self.crossover(parent_population[i], parent_population[i+1])
-                parent_population[i].data = cx1.reshape(5,5,5)  
-                parent_population[i+1].data = cx2.reshape(5,5,5)
+            while len(new_population) < self.population_size:
+                parent1, parent2 = self.select_parents(population_strip)
+                
+                if random.random() < self.crossover_rate:
+                    offspring1, offspring2 = self.crossover(parent1, parent2)
+                else:
+                    offspring1, offspring2 = parent1.data.copy(), parent2.data.copy()
 
-            for individu in parent_population:
-                temp = self.mutation(individu.data)
-                temp = np.array(temp)
-                individu.data = temp.reshape(5,5,5)
-            
-            self.population = parent_population
+                if random.random() < self.mutation_rate:
+                    offspring1 = self.mutation(offspring1)
+                if random.random() < self.mutation_rate:
+                    offspring2 = self.mutation(offspring2)
+
+                new_population.append(Cube(self.n))
+                new_population[-1].data = offspring1.reshape(5, 5, 5) 
+                
+                if len(new_population) < self.population_size:
+                    new_population.append(Cube(self.n)) 
+                    new_population[-1].data = offspring2.reshape(5, 5, 5)
+
+            self.population = new_population
+
         
     def generate_random_selection_probability(self):
-        population_value = []
-        total = 0
-        IsEnd = False
-
-        for i in self.population:
-            temp = i.calculate_value()
-            population_value.append(temp)
-            total += temp
-            if temp == 105:
-                IsEnd = True
+        population_value = [cube.calculate_value() for cube in self.population]
+        total = sum(population_value)
+        IsEnd = any(value == 109 for value in population_value)
 
         print(population_value)
-        last_strip_percentage = 0
-        population_strip = []
-        for i in population_value:
-            tmp = i/total * 100
-            population_strip.append(last_strip_percentage + (tmp))
-            last_strip_percentage += tmp
-        print(population_strip)
+
+        if total == 0:
+            population_strip = [100 * (i + 1) / self.population_size for i in range(self.population_size)]
+        else:
+            population_strip = np.cumsum([val / total * 100 for val in population_value]).tolist()
+
+        # print(population_strip)
         return IsEnd, population_strip
 
+    def select_parents(self, population_strip):
+        parent1 = self.roulette_selection(population_strip)
+        parent2 = self.roulette_selection(population_strip)
+        return parent1, parent2
+
+    def roulette_selection(self, population_strip):
+        rand = random.uniform(0, 100)
+        for idx, strip in enumerate(population_strip):
+            if rand <= strip:
+                return self.population[idx]
+        return self.population[-1]
+
     def crossover(self, parent1, parent2):
-        temp1 = parent1.data.reshape(125)
-        temp2 = parent2.data.reshape(125)
+        temp1 = np.array(parent1.data).reshape(125)
+        temp2 = np.array(parent2.data).reshape(125)
+        crossover_point = random.randint(1, 124)
 
-        middle_index = random.randint(0, 125) 
+        offspring1 = np.concatenate((temp1[:crossover_point], temp2[crossover_point:]))
+        offspring2 = np.concatenate((temp2[:crossover_point], temp1[crossover_point:]))
 
-        offspring1 = np.concatenate((temp1[:middle_index], temp2[middle_index:]))
-        offspring2 = np.concatenate((temp2[:middle_index], temp1[middle_index:]))
-
-        # Print the results
         return offspring1, offspring2
 
-    def mutation(self, parent):
-        original_array = parent.reshape(125)
-
+    def mutation(self, individual):
+        mutated = individual.flatten()
         n = self.n**3
 
-        # Buat set untuk melacak angka yang sudah ada
-        existing_numbers = set()
-        result_array = []
+        for idx in range(len(mutated)):
+            if random.random() < 0.05:
+                swap_idx = random.randint(0, len(mutated) - 1)
+                mutated[idx], mutated[swap_idx] = mutated[swap_idx], mutated[idx]
 
-        # Tambahkan angka unik ke result_array
-        for num in original_array:
-            if num in existing_numbers:
-                result_array.append(None)  # Tempat penampung untuk angka yang kembar
-            else:
-                result_array.append(num)
-                existing_numbers.add(num)
+        return np.array(mutated).reshape(5, 5, 5)
 
-        # Temukan angka yang hilang dari 1 hingga n
-        missing_numbers = set(range(1, n + 1)) - existing_numbers
+    def ordered_crossover(self, parent1, parent2):
+        child = [None] * len(parent1)
+        start, end = sorted(random.sample(range(len(parent1)), 2))
+        child[start:end] = parent1[start:end]
 
-        # Ganti None dengan angka yang hilang
-        missing_numbers = iter(sorted(missing_numbers))  # Urutkan angka yang hilang
-        for i in range(len(result_array)):
-            if result_array[i] is None:
-                result_array[i] = next(missing_numbers)
+        current_pos = end
+        for elem in parent2:
+            if elem not in child:
+                if current_pos >= len(parent1):
+                    current_pos = 0
+                child[current_pos] = elem
+                current_pos += 1
 
-        return result_array
+        return np.array(child)

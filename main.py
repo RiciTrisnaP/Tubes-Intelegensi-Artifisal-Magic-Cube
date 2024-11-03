@@ -19,14 +19,29 @@ def main():
     # stochastic_cube = HillClimbingSidewaysMove(5, 20)
     # stochastic_cube.solve()
 
-    stochastic_cube = HillClimbingSearchSteepestAscent(5)
-    list_swap, init = stochastic_cube.solve()
+    # stochastic_cube = HillClimbingSearchSteepestAscent(5)
+    # list_swap, init = stochastic_cube.solve()
+    
+    # cube = GeneticAlgorithm(20, 10000, 5)
+    # cube.main_ga()
 
-    print(list_swap)
-    # cube = SimulatedAnnealing(5,100)
+    # print(list_swap)
+    cube = SimulatedAnnealing(5,10000)
     # cube.print_value()
-    # cube.solve()
+    cube.solve()
     # cube.print_value()
+    
+    # list1 = [1,3,4,2,5,8,7,6]
+    # list2 = [7,5,6,1,2,4,3,8]
+    
+    # start = random.randint(0,len(list1)-1)
+    # last = random.randint(start+1, len(list1))
+    
+    # print(start, last)
+    # print(list1[start:last])
+    
+    
+    
 
     end_time = time.time() 
 

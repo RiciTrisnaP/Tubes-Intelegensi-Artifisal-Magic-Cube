@@ -8,6 +8,7 @@ class SimulatedAnnealing:
         self.initial_temperature = initial_temperature
         self.cooling_rate = cooling_rate
         self.list_swap_points = []
+        self.n = n
     
     def solve(self):
         initial_config = self.cube.data
