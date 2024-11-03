@@ -1,11 +1,13 @@
 from algorithm.Cube import *
+import matplotlib.pyplot as plt
 
-class HillClimbingSearchSteepestAscent:
+class HillClimbingSearchSteepestAscent: 
     def __init__(self, n):
         self.n = n
         self.cube = Cube(n)
-        self.iterasi= 0
+        self.iterasi = 0
         self.value= 0
+        self.values = [] 
 
     def solve(self):
         self.value = self.cube.calculate_value()
@@ -15,6 +17,7 @@ class HillClimbingSearchSteepestAscent:
         list_swap_points = []
         
         while True:
+            self.values.append(self.value)
             max_value = self.value
             max_pos1 = None
             max_pos2 = None
@@ -49,6 +52,8 @@ class HillClimbingSearchSteepestAscent:
                 print(f"Maximum iteration: {self.iterasi}")
                 break 
         
+        print("\nIterasi: ", self.iterasi)
+        # self.plot_value()
         return list_swap_points,initial_config
 
     def linearpos_to_3dpos(self, num):
@@ -63,3 +68,13 @@ class HillClimbingSearchSteepestAscent:
     
     def print_value(self):
         self.cube.print_value()
+    
+    def plot_value(self):
+        plt.figure(figsize=(12, 6))
+        plt.plot(self.values, marker='o', linestyle='-', color='b')
+        plt.title("Cube Value Through Hill Climbing Iterations")
+        plt.xlabel("Iteration")
+        plt.ylabel("Cube Value")
+        plt.grid()
+        plt.tight_layout()
+        plt.show()

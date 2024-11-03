@@ -10,25 +10,36 @@ from algorithm.SimulatedAnnealing import *
 def main():
     start_time = time.time()
 
+    # Random Restart Hill climbing
     # cube = RandomRestartHillClimbing(5,3)
     # cube.solve()
     # cube.print_value()
+
+    # Stochastic Hill Climbing
     # stochastic_cube = StochasticHillClimbing(5, 10000)
     # stochastic_cube.solve()
 
+    # Hill Climbing Sideways
     # stochastic_cube = HillClimbingSidewaysMove(5, 20)
     # stochastic_cube.solve()
 
-    # stochastic_cube = HillClimbingSearchSteepestAscent(5)
-    # list_swap, init = stochastic_cube.solve()
+    # Hill Climbing Steepest Ascent
+    stochastic_cube = HillClimbingSearchSteepestAscent(5)
+    list_swap, init = stochastic_cube.solve()
+    stochastic_cube.plot_value()
+
+    # Simulated Annealing
+    # cube = SimulatedAnnealing(5)
+    # cube.solve()
     
-    # cube = GeneticAlgorithm(20, 10000, 5)
+    # Genetic Algorithm
+    # cube = GeneticAlgorithm(5, 1000, 5)
     # cube.main_ga()
 
     # print(list_swap)
-    cube = SimulatedAnnealing(5,10000)
-    # cube.print_value()
-    cube.solve()
+    # cube = SimulatedAnnealing(5, 2000)
+    # # cube.print_value()
+    # cube.solve()
     # cube.print_value()
     
     # list1 = [1,3,4,2,5,8,7,6]
@@ -40,13 +51,11 @@ def main():
     # print(start, last)
     # print(list1[start:last])
     
-    
-    
 
     end_time = time.time() 
 
     duration = end_time - start_time
-    print(f"Stochastic Hill Climbing Algorithm Duration: {duration:.4f} seconds")
+    print(f"Algorithm Duration: {duration:.4f} seconds")
 
 if __name__ == "__main__":
     main()

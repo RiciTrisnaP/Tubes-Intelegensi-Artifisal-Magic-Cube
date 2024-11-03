@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import random
 from algorithm.Cube import Cube
 
@@ -11,9 +12,13 @@ class GeneticAlgorithm:
         self.crossover_rate = crossover_rate
         self.mutation_rate = mutation_rate
         self.population = [Cube(n) for _ in range(population_size)]
+        self.max_values = []
+        self.mean_values = []
+        self.iteration = 0
         
     def main_ga(self):
         for gen in range(self.nmax):
+            self.iteration += 1
             parent_population = []
             IsEnd, population_strip = self.generate_random_selection_probability()
 
@@ -45,9 +50,16 @@ class GeneticAlgorithm:
 
             self.population = new_population
 
+        print("\nIterasi: ", self.iteration)
+        self.plot_value()
+
         
     def generate_random_selection_probability(self):
         population_value = [cube.calculate_value() for cube in self.population]
+
+        self.max_values.append(max(population_value))
+        self.mean_values.append(np.mean(population_value))
+
         total = sum(population_value)
         IsEnd = any(value == 109 for value in population_value)
 
@@ -85,7 +97,6 @@ class GeneticAlgorithm:
 
     def mutation(self, individual):
         mutated = individual.flatten()
-        n = self.n**3
 
         for idx in range(len(mutated)):
             if random.random() < 0.05:
@@ -108,3 +119,20 @@ class GeneticAlgorithm:
                 current_pos += 1
 
         return np.array(child)
+
+    def plot_value(self):
+        plt.figure(figsize=(12, 6))
+        
+        plt.plot(self.mean_values, linestyle='-', color='r', label='Mean Value', linewidth = 0.5)
+
+        plt.plot(self.max_values, linestyle='-', color='b', label='Max Value')
+        
+        plt.title("Max and Mean Cube Values Over Generations")
+        plt.xlabel("Generation")
+        plt.ylabel("Cube Value")
+        plt.grid()
+        
+        plt.legend()
+        
+        plt.tight_layout()
+        plt.show()
