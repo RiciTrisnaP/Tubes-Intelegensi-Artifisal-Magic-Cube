@@ -41,7 +41,11 @@ def main():
         return
 
     if inp == 6:
-        list_swap, init= solve_cube.solve()
+        solve_cube.solve()
+        end_time = time.time() 
+        duration = end_time - start_time
+        print(f"Algorithm Duration: {duration:.4f} seconds")
+        return
     else:
         solve_cube.print_value()
         list_swap, init= solve_cube.solve()
