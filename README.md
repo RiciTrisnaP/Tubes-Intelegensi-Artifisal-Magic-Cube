@@ -1,4 +1,4 @@
-Tugas Besar 1 Intelegensi Artifisial
+## Tugas Besar 1 Intelegensi Artifisial
 Oleh:
 1. Rici Trisna Putra (13522026)
 2. Francesco Michael Kusuma (13522038)
