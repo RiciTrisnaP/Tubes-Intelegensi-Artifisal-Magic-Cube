@@ -39,7 +39,7 @@ class RandomRestartHillClimbing:
                 print("Solved")
                 break
 
-        self.cube = cube
+        self.cube = cube.cube
         
         print("Jumlah restart: ", self.restart)
         self.plot_value()
@@ -52,9 +52,9 @@ class RandomRestartHillClimbing:
         # Cube plot
         fig1 = plt.figure(figsize=(12, 6))
         ax1 = fig1.add_subplot(121, projection='3d') 
-        self.plot_number_cube(ax1, self.best_initial_state, "Best Initial Configuration")
+        self.cube.plot_number_cube(ax1, self.best_initial_state, "Best Initial Configuration")
         ax2 = fig1.add_subplot(122, projection='3d')
-        self.plot_number_cube(ax2, self.best_final_state, "Best Final Configuration")
+        self.cube.plot_number_cube(ax2, self.best_final_state, "Best Final Configuration")
         ax1.view_init(elev=30, azim=30)
         ax2.view_init(elev=30, azim=30)
         plt.tight_layout() 
@@ -71,19 +71,3 @@ class RandomRestartHillClimbing:
         plt.grid()
         plt.tight_layout()
         plt.show()
-    
-    def plot_number_cube(self, ax, cube_data, title):
-        for i in range(self.n):
-            for j in range(self.n):
-                for k in range(self.n):
-                    ax.text(i, j, k, str(cube_data[i, j, k]),
-                            color='black', fontsize=8, ha='center', va='center', alpha=1.0)
-
-        ax.set_xlim([0, self.n])
-        ax.set_ylim([0, self.n])
-        ax.set_zlim([0, self.n])
-
-        ax.set_xlabel('X Axis')
-        ax.set_ylabel('Y Axis')
-        ax.set_zlabel('Z Axis')
-        ax.set_title(title)
