@@ -38,7 +38,7 @@ def main():
         solve_cube = SimulatedAnnealing(5)
     elif inp == 5:
         print("\n\nMenjalankan Algoritma Stochastic Hill Climbing\n")
-        solve_cube = StochasticHillClimbing(5,10000)
+        solve_cube = StochasticHillClimbing(5,100)
     elif inp == 6:
         print("\n\nMenjalankan Algoritma Genetic Algorithm\n")
         solve_cube = GeneticAlgorithm(5, 1000, 5)
