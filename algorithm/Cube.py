@@ -97,3 +97,20 @@ class Cube:
             for j in range (self.n):
                 for k in range (self.n):
                     print(self.data[i,j,k],end=" ")
+    
+    
+    def plot_number_cube(self, ax, cube_data, title):
+        for i in range(self.n):
+            for j in range(self.n):
+                for k in range(self.n):
+                    ax.text(i, j, k, str(cube_data[i, j, k]),
+                            color='black', fontsize=8, ha='center', va='center', alpha=1.0)
+
+        ax.set_xlim([0, self.n])
+        ax.set_ylim([0, self.n])
+        ax.set_zlim([0, self.n])
+
+        ax.set_xlabel('X Axis')
+        ax.set_ylabel('Y Axis')
+        ax.set_zlabel('Z Axis')
+        ax.set_title(title)

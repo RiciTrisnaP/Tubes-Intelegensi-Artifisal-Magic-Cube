@@ -42,7 +42,7 @@ def main():
         solve_cube = StochasticHillClimbing(5,10000) #render aman
     elif inp == 6:
         print("\n\nMenjalankan Algoritma Genetic Algorithm\n")
-        solve_cube = GeneticAlgorithm(5, 1000, 5)
+        solve_cube = GeneticAlgorithm(10, 1000, 5)
     else:
         print("Pilihan tidak valid.")
         return

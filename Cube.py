@@ -298,12 +298,11 @@ class simulated_annealing:
                 sum += self.cube.data[i, (self.cube.n - 1)-i, (self.cube.n - 1)-i]
             if sum == self.cube.magic_number:
                 total += 1
-            # print(sum)
-            
-            # print(total)
             return total
+        
+        
+
     
-# Example usage
 random_cube = simulated_annealing(5)
 
 random_cube.main_sa()

@@ -1,5 +1,6 @@
 from algorithm.Cube import *
 import matplotlib.pyplot as plt
+import copy
 
 class StochasticHillClimbing:
     def __init__(self, n, iterations):
@@ -11,7 +12,7 @@ class StochasticHillClimbing:
         self.num_iterations = 0
         
     def solve(self):
-        initial_configuration = self.cube.data
+        initial_configuration = copy.deepcopy(self.cube.data)
         
         for i in range(self.iterations):
             self.num_iterations += 1
@@ -47,15 +48,15 @@ class StochasticHillClimbing:
         # Cube plot
         fig1 = plt.figure(figsize=(12, 6))
         ax1 = fig1.add_subplot(121, projection='3d') 
-        self.plot_number_cube(ax1, initial_cube_data, "Initial Configuration")
+        self.cube.plot_number_cube(ax1, initial_cube_data, "Initial Configuration")
         ax2 = fig1.add_subplot(122, projection='3d')
-        self.plot_number_cube(ax2, final_cube_data, "Final Configuration")
+        self.cube.plot_number_cube(ax2, final_cube_data, "Final Configuration")
         ax1.view_init(elev=30, azim=30)
         ax2.view_init(elev=30, azim=30)
         plt.tight_layout() 
 
         # Graph plot
-        fig2 = plt.figure(figsize=(12, 6))
+        plt.figure(figsize=(12, 6))
         plt.plot(self.values, marker='o', linestyle='-', color='b')
         plt.title("Cube Value Through Hill Climbing Iterations")
         plt.xlabel("Iteration")
@@ -64,19 +65,3 @@ class StochasticHillClimbing:
         plt.legend()
 
         plt.show()
-
-    def plot_number_cube(self, ax, cube_data, title):
-        for i in range(self.n):
-            for j in range(self.n):
-                for k in range(self.n):
-                    ax.text(i, j, k, str(cube_data[i, j, k]),
-                            color='black', fontsize=8, ha='center', va='center', alpha=1.0)
-
-        ax.set_xlim([0, self.n])
-        ax.set_ylim([0, self.n])
-        ax.set_zlim([0, self.n])
-
-        ax.set_xlabel('X Axis')
-        ax.set_ylabel('Y Axis')
-        ax.set_zlabel('Z Axis')
-        ax.set_title(title)
