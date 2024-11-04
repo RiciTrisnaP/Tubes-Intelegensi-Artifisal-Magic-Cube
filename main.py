@@ -35,13 +35,13 @@ def main():
         solve_cube = HillClimbingSidewaysMove(5,10)
     elif inp == 3:
         print("\n\nMenjalankan Algoritma Random Restart Hill Climbing\n")
-        solve_cube = RandomRestartHillClimbing(5,2) #render aman
+        solve_cube = RandomRestartHillClimbing(5,1) #render aman
     elif inp == 4:
         print("\n\nMenjalankan Algoritma Simulated Anealing\n")
         solve_cube = SimulatedAnnealing(5) #render aman
     elif inp == 5:
         print("\n\nMenjalankan Algoritma Stochastic Hill Climbing\n")
-        solve_cube = StochasticHillClimbing(5,10000) #render aman
+        solve_cube = StochasticHillClimbing(5,1000) #render aman
     elif inp == 6:
         print("\n\nMenjalankan Algoritma Genetic Algorithm\n")
         solve_cube = GeneticAlgorithm(20, 10000, 5)
