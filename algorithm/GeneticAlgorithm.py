@@ -16,12 +16,14 @@ class GeneticAlgorithm:
         self.mean_values = []
         self.iteration = 0
         self.best_per_iteration = []
-        self.four_best_initial = []
-        self.four_best_last = []
+        self.two_best_initial = []
+        self.two_best_last = []
         
     def solve(self):
         sorted_population = sorted(self.population, key=lambda x: x.calculate_value(), reverse=True)
-        self.four_best_initial.append(sorted_population[0].data.copy())
+        self.two_best_initial.append(sorted_population[0].data.copy())
+        self.two_best_initial.append(sorted_population[1].data.copy())
+        
         for gen in range(self.nmax):
             self.iteration += 1
             parent_population = []
@@ -55,8 +57,11 @@ class GeneticAlgorithm:
                     new_population[-1].data = offspring2.reshape(5, 5, 5)
 
             self.population = new_population
-
-        print("\nIterasi: ", self.iteration)
+            
+            
+        self.two_best_last.append(sorted_population[0].data.copy())
+        self.two_best_last.append(sorted_population[1].data.copy())
+        
         self.plot_value()
         
     def generate_random_selection_probability(self):
@@ -126,6 +131,26 @@ class GeneticAlgorithm:
         return np.array(child)
 
     def plot_value(self):
+        # Cube plot
+        fig1 = plt.figure(figsize=(12, 6))
+        
+        grid = fig1.add_gridspec(2,2,height_ratios = [1,1])
+        ax1 = fig1.add_subplot(grid[0,0], projection='3d') 
+        self.population[0].plot_number_cube(ax1, self.two_best_initial[0], "Initial Cube 1")
+        ax2 = fig1.add_subplot(grid[0,1], projection='3d')
+        self.population[0].plot_number_cube(ax2, self.two_best_initial[1], "Initial Cube 2")
+        ax3 = fig1.add_subplot(grid[1,0], projection='3d')
+        self.population[0].plot_number_cube(ax3, self.two_best_last[0], "Final Cube 1")
+        ax4 = fig1.add_subplot(grid[1,1], projection='3d')
+        self.population[0].plot_number_cube(ax4, self.two_best_last[1], "Final Cube 1")
+        
+        ax1.view_init(elev=30, azim=30)
+        ax2.view_init(elev=30, azim=30)
+        ax3.view_init(elev=30, azim=30)
+        ax4.view_init(elev=30, azim=30)
+        
+        plt.tight_layout() 
+        
         plt.figure(figsize=(12, 6))
         
         plt.plot(self.mean_values, linestyle='-', color='r', label='Mean Value', linewidth = 0.5)

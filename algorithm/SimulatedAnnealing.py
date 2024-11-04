@@ -5,7 +5,7 @@ from algorithm.Cube import *
 import copy
 
 class SimulatedAnnealing:
-    def __init__(self, n, max_iterations=10000, initial_temperature=1000, cooling_rate=0.99):
+    def __init__(self, n, max_iterations=20000, initial_temperature=1000, cooling_rate=0.99):
         self.cube = Cube(n)
         self.initial_temperature = initial_temperature
         self.cooling_rate = cooling_rate
@@ -83,8 +83,12 @@ class SimulatedAnnealing:
         plt.tight_layout() 
 
         # Graph plot
-        plt.figure(figsize=(12, 6))
-        plt.plot(self.values, marker='o', linestyle='-', color='b')
+        fig2, ax1, ax2 = plt.figure(figsize=(12, 6))
+        
+        filtered_probabilities = [prob for prob in self.probabilities if prob < 1.0]
+        filtered_indices = [idx for idx, prob in enumerate(self.probabilities) if prob < 1.0]
+        
+        plt.plot(self.values, linestyle='-', color='b')
         plt.title("Cube Value Through Hill Climbing Steepest Ascent")
         plt.xlabel("Iteration")
         plt.ylabel("Value")
