@@ -54,7 +54,6 @@ class StochasticHillClimbing:
         return pos[0] * (self.n**2) + pos[1] * (self.n) + pos[2]
     
     def plot_value(self, initial_cube_data, final_cube_data):
-        # Cube plot
         fig1 = plt.figure(figsize=(12, 6))
         ax1 = fig1.add_subplot(121, projection='3d') 
         self.cube.plot_number_cube(ax1, initial_cube_data, "Initial Configuration")
@@ -64,7 +63,6 @@ class StochasticHillClimbing:
         ax2.view_init(elev=30, azim=30)
         plt.tight_layout() 
 
-        # Graph plot
         plt.figure(figsize=(12, 6))
         plt.plot(self.values, linestyle='-')
         plt.title("Stochastic Hill Climbing")
