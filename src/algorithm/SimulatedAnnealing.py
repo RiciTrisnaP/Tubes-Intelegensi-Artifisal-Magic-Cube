@@ -6,7 +6,7 @@ import copy
 import time
 
 class SimulatedAnnealing:
-    def __init__(self, max_iterations=100, initial_temperature=1000, cooling_rate=0.99, n=5):
+    def __init__(self, max_iterations = 10000, initial_temperature = 1000, cooling_rate = 0.99, n = 5):
         self.cube = Cube(n)
         self.initial_temperature = initial_temperature
         self.cooling_rate = cooling_rate
@@ -28,7 +28,7 @@ class SimulatedAnnealing:
             T = self.temperature(self.iteration)
             if T <= 0:
                 break
-            print("Temp: ", T)
+
             self.compare_state(self.cube.generate_random_point(), self.cube.generate_random_point(), T)
 
             current_value = self.cube.calculate_value()
@@ -55,8 +55,6 @@ class SimulatedAnnealing:
 
         deltaE = (neighbor_value - current_value)
 
-        print("pos1: ", pos1, "pos2: ", pos2, "current value: ", current_value, "neighbor value: ", neighbor_value, "difference: ", deltaE)
-
         if deltaE >= 0:
             self.probabilities.append(1.0)
             self.threshold.append(0)
@@ -67,7 +65,6 @@ class SimulatedAnnealing:
             self.threshold.append(threshold)
             prob = math.exp(deltaE / T) 
             self.probabilities.append(prob)
-            print("Prob: ", prob, " threshold: ", threshold)
             if T > 0 and prob >= threshold:
                 return
             else:
@@ -95,8 +92,8 @@ class SimulatedAnnealing:
         filtered_probabilities = [prob for prob in self.probabilities if prob < 1.0]
         filtered_indices = [idx for idx, prob in enumerate(self.probabilities) if prob < 1.0]
         
-        ax1.plot(filtered_indices, filtered_probabilities, label='Probability (ΔE < 0)', linestyle='-')
-        ax1.set_title("Probability Values When ΔE < 0")
+        ax1.plot(filtered_indices, filtered_probabilities, label='Probability', linestyle='-')
+        ax1.set_title("Probability Values")
         ax1.set_xlabel("Iteration")
         ax1.set_ylabel("Probability Values")
         ax1.grid()

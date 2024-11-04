@@ -106,7 +106,6 @@ class GeneticAlgorithm:
         return self.population[-1]
 
     def crossover(self, parent1, parent2):
-        # Flatten parent data arrays
         temp1 = np.array(parent1.data).reshape(125)
         temp2 = np.array(parent2.data).reshape(125)
         
@@ -165,7 +164,6 @@ class GeneticAlgorithm:
         return np.array(child)
 
     def plot_value(self):
-        # Cube plot
         fig1 = plt.figure(figsize=(12, 6))
         
         grid = fig1.add_gridspec(2,2,height_ratios = [1,1])

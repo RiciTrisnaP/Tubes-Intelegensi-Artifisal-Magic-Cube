@@ -109,7 +109,6 @@ class Cube:
                     
                     color = colors[k % len(colors)]
 
-                    # Plot the number in the center
                     ax.text(x_center, y_center, z_center, str(cube_data[i, j, k]),
                             ha='center', va='center',  color=color, fontsize=10)
 

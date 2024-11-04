@@ -14,7 +14,6 @@ class HillClimbingSearch:
     
     def solve(self):
         self.current_value = self.cube.calculate_value()
-        # print(f"Initial Value: {self.current_value}")
         
         initial_config = copy.deepcopy(self.cube.data)
         list_swap_points = []
@@ -33,7 +32,6 @@ class HillClimbingSearch:
                     new_value = self.cube.calculate_value()
 
                     if new_value > self.current_value:
-                        # print(f"Better Value Found: {new_value} by swapping {pos1} and {pos2}")
                         self.current_value = new_value  
                         better_found = True 
                         break
@@ -45,7 +43,6 @@ class HillClimbingSearch:
                     break
 
             if not better_found:
-                # print("No further improvement found. Terminating search.")
                 break
         
         self.initial_state = initial_config

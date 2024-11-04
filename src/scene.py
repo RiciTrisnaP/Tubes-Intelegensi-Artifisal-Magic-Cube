@@ -18,7 +18,6 @@ class CubeWithNumbers(ThreeDScene):
     def construct(self):
         self.set_camera_orientation(phi=30 * DEGREES, theta=0 * DEGREES, gamma=90 * DEGREES, frame_center=[0,1,0])
         
-        # Buat kubus kecilnya
         side_length = 0.6 
         spacing = 1.0
     
@@ -29,11 +28,9 @@ class CubeWithNumbers(ThreeDScene):
         for x in range(0, 5):
             for y in range(0, 5):
                 for z in range(0, 5):
-                    # buat kubus kecil
                     small_cube = C(side_length=side_length, fill_opacity=0.7)
                     small_cube.shift(x * spacing * RIGHT + y * spacing * UP + z * spacing * OUT)
                     
-                    # masukan angka
                     number = Text(str(self.init[x][y][z]), font_size=18, color=WHITE)
                     number.move_to(small_cube.get_center())
                     small_cube_with_number = VGroup(small_cube, number)
@@ -45,7 +42,6 @@ class CubeWithNumbers(ThreeDScene):
         self.begin_ambient_camera_rotation(rate=0, about="phi")
         self.wait(2)
         
-        #swap
         for swap_points in self.list_swap:
             cubeA = cube_dict[swap_points[0]]
             cubeB = cube_dict[swap_points[1]]

@@ -82,10 +82,10 @@ def main():
         inp2 = input("Invalid choice. Do you want to render the video? (Y/T): ").strip().lower()
 
     if (inp2 == "Y" or inp2=="y"):
-        if inp == 3: #random restart
+        if inp == 3:
             scene = CubeWithNumbersRR(list_swap, init)
             scene.render()
-        elif inp == 6: #GA
+        elif inp == 6:
             scene = CubeGenetic(vis)
             scene.render()
         else:

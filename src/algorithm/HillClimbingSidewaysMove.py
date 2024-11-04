@@ -40,7 +40,6 @@ class HillClimbingSidewaysMove:
                     new_value = self.cube.calculate_value()
 
                     if new_value > max_value:
-                        # print(f"Better Value Found: {new_value} by swapping {pos1} and {pos2}")
                         max_value = new_value
                         max_pos1 = pos1
                         max_pos2 = pos2
@@ -55,7 +54,6 @@ class HillClimbingSidewaysMove:
                 self.cube.swap(max_pos1, max_pos2)
                 self.value = max_value
                 print(f"Moved to new position with value: {self.value}")
-                # sideways_moves_count = 0 
                 
                 list_swap_points.append([self.from_3dpos_to_linearpos(max_pos1), self.from_3dpos_to_linearpos(max_pos2)])
             elif sideways_moves:
@@ -93,7 +91,6 @@ class HillClimbingSidewaysMove:
         self.cube.print_value()
     
     def plot_value(self, initial_cube_data, final_cube_data):
-        # Cube plot
         fig1 = plt.figure(figsize=(12, 6))
         ax1 = fig1.add_subplot(121, projection='3d') 
         self.cube.plot_number_cube(ax1, initial_cube_data, "Initial Configuration")
@@ -103,7 +100,6 @@ class HillClimbingSidewaysMove:
         ax2.view_init(elev=30, azim=30)
         plt.tight_layout() 
 
-        # Graph plot
         plt.figure(figsize=(12, 6))
         plt.plot(self.values, marker='o', linestyle='-', color='b')
         plt.title("Cube Value Through Hill Climbing Sideways Move Ascent")

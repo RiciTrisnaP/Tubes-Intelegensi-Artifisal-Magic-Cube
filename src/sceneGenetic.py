@@ -12,7 +12,6 @@ class CubeGenetic(ThreeDScene):
     def construct(self):
         self.set_camera_orientation(phi=30 * DEGREES, theta=0 * DEGREES, gamma=90 * DEGREES, frame_center=[0,1,0])
         
-        # Buat kubus kecil
         side_length = 0.6 
         spacing = 1.0   
         cubes = VGroup()  
@@ -22,11 +21,9 @@ class CubeGenetic(ThreeDScene):
             for x in range(0, 5):
                 for y in range(0, 5):
                     for z in range(0, 5):
-                        # Buat kubus kecil
                         small_cube = C(side_length=side_length, fill_opacity=0.7)
                         small_cube.shift(x * spacing * RIGHT + y * spacing * UP + z * spacing * OUT)
                         
-                        #masukan angkanya
                         number = Text(str(temp[x][y][z]), font_size=18, color=WHITE)
                         number.move_to(small_cube.get_center())
                         small_cube_with_number = VGroup(small_cube, number)
