@@ -15,8 +15,13 @@ class GeneticAlgorithm:
         self.max_values = []
         self.mean_values = []
         self.iteration = 0
+        self.best_per_iteration = []
+        self.four_best_initial = []
+        self.four_best_last = []
         
     def solve(self):
+        sorted_population = sorted(self.population, key=lambda x: x.calculate_value(), reverse=True)
+        self.four_best_initial.append(sorted_population[0].data.copy())
         for gen in range(self.nmax):
             self.iteration += 1
             parent_population = []
@@ -26,6 +31,7 @@ class GeneticAlgorithm:
                 break
 
             sorted_population = sorted(self.population, key=lambda x: x.calculate_value(), reverse=True)
+            self.best_per_iteration.append(sorted_population[0].data.copy())
             new_population = sorted_population[:self.elite_count]
 
             while len(new_population) < self.population_size:
