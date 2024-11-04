@@ -1,18 +1,24 @@
 from algorithm.Cube import *
+import matplotlib.pyplot as plt
 
 class HillClimbingSearch:
     def __init__(self, n):
         self.n = n
         self.cube = Cube(n)
+        self.values = []
+        self.current_value = 0
+        self.iteration = 0
     
     def solve(self):
-        current_value = self.cube.calculate_value()
-        print(f"Initial Value: {current_value}")
+        self.current_value = self.cube.calculate_value()
+        print(f"Initial Value: {self.current_value}")
         
         initial_config = self.cube.data
         list_swap_points = []
 
         while True:
+            self.values.append(self.current_value)
+            self.iteration += 1
             better_found = False
 
             for i in range(self.n**3):
@@ -23,9 +29,9 @@ class HillClimbingSearch:
                     self.cube.swap(pos1, pos2)
                     new_value = self.cube.calculate_value()
 
-                    if new_value > current_value:
+                    if new_value > self.current_value:
                         print(f"Better Value Found: {new_value} by swapping {pos1} and {pos2}")
-                        current_value = new_value  
+                        self.current_value = new_value  
                         better_found = True 
                         break
 
@@ -52,4 +58,12 @@ class HillClimbingSearch:
     
     def print_value(self):
         self.cube.print_value()
+    
+    def getIterations(self):
+        return self.iteration
+    
+    def getCurrentValue(self):
+        return self.current_value
 
+    def list_of_values(self):
+        return self.values

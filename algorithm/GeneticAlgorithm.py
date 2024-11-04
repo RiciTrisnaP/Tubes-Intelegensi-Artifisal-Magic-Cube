@@ -16,7 +16,7 @@ class GeneticAlgorithm:
         self.mean_values = []
         self.iteration = 0
         
-    def main_ga(self):
+    def solve(self):
         for gen in range(self.nmax):
             self.iteration += 1
             parent_population = []
@@ -52,7 +52,6 @@ class GeneticAlgorithm:
 
         print("\nIterasi: ", self.iteration)
         self.plot_value()
-
         
     def generate_random_selection_probability(self):
         population_value = [cube.calculate_value() for cube in self.population]

@@ -1,5 +1,6 @@
 from algorithm.Cube import *
 import matplotlib.pyplot as plt
+import random
 
 class HillClimbingSidewaysMove:
     def __init__(self, n, max_sideways_moves):
@@ -31,8 +32,8 @@ class HillClimbingSidewaysMove:
 
             for i in range(self.n**3):
                 for j in range(i + 1, self.n**3):
-                    pos1 = self.linearpos_to_3dpos(i)
-                    pos2 = self.linearpos_to_3dpos(j)
+                    pos1 = self.linearpos_to_3dpos(random.randint(0, i))
+                    pos2 = self.linearpos_to_3dpos(random.randint(0, j))
 
                     self.cube.swap(pos1, pos2)
                     new_value = self.cube.calculate_value()
@@ -57,14 +58,14 @@ class HillClimbingSidewaysMove:
                 
                 list_swap_points.append([self.from_3dpos_to_linearpos(max_pos1), self.from_3dpos_to_linearpos(max_pos2)])
             elif sideways_moves:
-                    best_pos1, best_pos2 = sideways_moves[0]
-                    self.cube.swap(best_pos1, best_pos2)
-                    self.value = self.cube.calculate_value()
-                    sideways_moves_count += 1 
-                    print(f"Sideways Move: Swapped {best_pos1} and {best_pos2}. New Value: {self.value}")
-                    if sideways_moves_count >= self.max_sideways_moves:
-                        print("Maximum sideways moves reached.")
-                        break
+                best_pos1, best_pos2 = sideways_moves[-1]
+                self.cube.swap(best_pos1, best_pos2)
+                self.value = self.cube.calculate_value()
+                sideways_moves_count += 1 
+                print(f"Sideways Move: Swapped {best_pos1} and {best_pos2}. New Value: {self.value}")
+                if sideways_moves_count >= self.max_sideways_moves:
+                    print("Maximum sideways moves reached.")
+                    break
             else:
                 print("No further improvement found.")
                 break
@@ -88,7 +89,7 @@ class HillClimbingSidewaysMove:
     def plot_value(self):
         plt.figure(figsize=(12, 6))
         plt.plot(self.values, marker='o', linestyle='-', color='b')
-        plt.title("Cube Value Through Hill Climbing Iterations")
+        plt.title("Cube Value Through Hill Climbing Side Ways Move Iterations")
         plt.xlabel("Iteration")
         plt.ylabel("Cube Value")
         plt.grid()
