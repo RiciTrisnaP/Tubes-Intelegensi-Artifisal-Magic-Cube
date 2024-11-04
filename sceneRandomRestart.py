@@ -9,7 +9,12 @@ from algorithm.HillClimbingSidewaysMove import *
 from algorithm.RandomRestartHillClimbing import *
 from algorithm.SimulatedAnnealing import *
 
-class CubeWithNumbers(ThreeDScene):
+class CubeWithNumbersRR(ThreeDScene):
+    def __init__(self, list_swaps, list_inits, **kwargs):
+        super().__init__(**kwargs)
+        self.list_swaps = list_swaps
+        self.list_inits = list_inits
+
     def construct(self):
         # Set up the camera orientation
         self.set_camera_orientation(phi=30 * DEGREES, theta=0 * DEGREES, gamma=90 * DEGREES, frame_center=[0,1,0])
@@ -25,13 +30,11 @@ class CubeWithNumbers(ThreeDScene):
         # init = Cube(5).data
         # list_swap = [[1, 83]]
         
-        stochastic_cube = RandomRestartHillClimbing(5, 2)
-        list_swaps, list_inits = stochastic_cube.solve()
         
          # Start numbering from 1
-        for i in range (len(list_swaps)):
-            swap = list_swaps[i]
-            init = list_inits[i]
+        for i in range (len(self.list_swaps)):
+            swap = self.list_swaps[i]
+            init = self.list_inits[i]
             count = 0
             for x in range(0, 5):
                 for y in range(0, 5):
@@ -92,3 +95,4 @@ class CubeWithNumbers(ThreeDScene):
                 self.wait(1)
                 
             self.remove(cubes)
+            cubes = VGroup()
