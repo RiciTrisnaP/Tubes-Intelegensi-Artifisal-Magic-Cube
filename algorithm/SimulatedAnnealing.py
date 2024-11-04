@@ -5,7 +5,7 @@ from algorithm.Cube import *
 import copy
 
 class SimulatedAnnealing:
-    def __init__(self, n, max_iterations=1000, initial_temperature=1000, cooling_rate=0.99):
+    def __init__(self, max_iterations=100, initial_temperature=1000, cooling_rate=0.99, n=5):
         self.cube = Cube(n)
         self.initial_temperature = initial_temperature
         self.cooling_rate = cooling_rate
@@ -32,7 +32,8 @@ class SimulatedAnnealing:
 
             self.iteration += 1
 
-        print("Stuck: ", self.stuck)
+        print("\nLast value: ", self.values[-1])
+        print("Number of stucks: ", self.stuck, end = "\n\n")
         self.plot_value(initial_config, self.cube.data)
         return self.list_swap_points, initial_config
 

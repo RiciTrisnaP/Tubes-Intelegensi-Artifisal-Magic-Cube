@@ -4,7 +4,7 @@ import random
 from algorithm.Cube import Cube
 
 class GeneticAlgorithm:
-    def __init__(self, population_size, nmax, n, elite_count=1, crossover_rate=0.8, mutation_rate=0.1):
+    def __init__(self, population_size, nmax, n = 5, elite_count=1, crossover_rate=0.8, mutation_rate=0.1):
         self.population_size = population_size
         self.nmax = nmax
         self.n = n
@@ -18,6 +18,7 @@ class GeneticAlgorithm:
         self.best_per_iteration = []
         self.two_best_initial = []
         self.two_best_last = []
+        self.best_value = 0
         
     def solve(self):
         sorted_population = sorted(self.population, key=lambda x: x.calculate_value(), reverse=True)
@@ -61,6 +62,10 @@ class GeneticAlgorithm:
             
         self.two_best_last.append(sorted_population[0].data.copy())
         self.two_best_last.append(sorted_population[1].data.copy())
+
+        print("\nBest value: ", self.best_value)
+        print("Number of population: ", self.population_size)
+        print("Number of iterations: ", self.iteration)
         
         self.plot_value()
         
@@ -74,13 +79,13 @@ class GeneticAlgorithm:
         IsEnd = any(value == 109 for value in population_value)
 
         print(population_value)
+        self.best_value = max(population_value)
 
         if total == 0:
             population_strip = [100 * (i + 1) / self.population_size for i in range(self.population_size)]
         else:
             population_strip = np.cumsum([val / total * 100 for val in population_value]).tolist()
 
-        # print(population_strip)
         return IsEnd, population_strip
 
     def select_parents(self, population_strip):

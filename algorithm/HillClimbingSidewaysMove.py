@@ -4,7 +4,7 @@ import random
 import copy
 
 class HillClimbingSidewaysMove:
-    def __init__(self, n, max_sideways_moves):
+    def __init__(self, max_sideways_moves, n=5):
         self.n = n
         self.cube = Cube(n)
         self.max_sideways_moves = max_sideways_moves

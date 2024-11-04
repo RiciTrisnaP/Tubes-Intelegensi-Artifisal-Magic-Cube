@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import copy
 
 class HillClimbingSearchSteepestAscent: 
-    def __init__(self, n):
+    def __init__(self, n=5):
         self.n = n
         self.cube = Cube(n)
         self.iterasi = 0

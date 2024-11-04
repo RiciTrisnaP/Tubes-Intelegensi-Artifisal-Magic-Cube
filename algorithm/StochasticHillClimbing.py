@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import copy
 
 class StochasticHillClimbing:
-    def __init__(self, n, iterations):
+    def __init__(self, iterations, n=5):
         self.n = n
         self.cube = Cube(n)
         self.iterations = iterations
@@ -20,7 +20,9 @@ class StochasticHillClimbing:
             if end:
                 break
         
-        print("\nIterasi: ", self.num_iterations)
+        print("\nBest value: ", self.values[-1])
+        print("Number of iterations: ", self.num_iterations)
+
         self.plot_value(initial_configuration, self.cube.data)
         return self.list_swap_points, initial_configuration
     

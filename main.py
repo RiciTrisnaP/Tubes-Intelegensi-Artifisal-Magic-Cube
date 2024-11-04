@@ -29,32 +29,50 @@ def main():
     
     if inp == 1:
         print("\n\nMenjalankan Algoritma Steepest Ascent\n")
-        solve_cube = HillClimbingSearchSteepestAscent(5) #render aman
+        solve_cube = HillClimbingSearchSteepestAscent() 
     elif inp == 2:
-        print("\n\nMenjalankan Algoritma Sideways Move\n")
-        solve_cube = HillClimbingSidewaysMove(5,10)
+        try:
+            print("\n\nMenjalankan Algoritma Sideways Move\n")
+            num_max_sideways_moves = int(input("Number of maximum sideways moves: "))
+            solve_cube = HillClimbingSidewaysMove(num_max_sideways_moves)
+        except ValueError:
+            print("Input should be a number.")
+            return
     elif inp == 3:
-        print("\n\nMenjalankan Algoritma Random Restart Hill Climbing\n")
-        solve_cube = RandomRestartHillClimbing(5,1) #render aman
+        try:
+            print("\n\nMenjalankan Algoritma Random Restart Hill Climbing\n")
+            num_max_restarts = int(input("Number of maximum restarts: "))
+            solve_cube = RandomRestartHillClimbing(num_max_restarts)
+        except ValueError:
+            print("Input should be a number.")
+            return
     elif inp == 4:
         print("\n\nMenjalankan Algoritma Simulated Anealing\n")
-        solve_cube = SimulatedAnnealing(5) #render aman
+        solve_cube = SimulatedAnnealing()
     elif inp == 5:
-        print("\n\nMenjalankan Algoritma Stochastic Hill Climbing\n")
-        solve_cube = StochasticHillClimbing(5,1000) #render aman
+        try:
+            print("\n\nMenjalankan Algoritma Stochastic Hill Climbing\n")
+            num_iteration = int(input("Number of iteration: "))
+            solve_cube = StochasticHillClimbing(num_iteration)
+        except ValueError:
+            print("Input should be a number.")
+            return
     elif inp == 6:
-        print("\n\nMenjalankan Algoritma Genetic Algorithm\n")
-        solve_cube = GeneticAlgorithm(20, 10000, 5)
+        try:
+            print("\n\nMenjalankan Algoritma Genetic Algorithm\n")
+            num_population = int(input("Number of population: "))
+            num_iteration = int(input("Number of iteration: "))
+            solve_cube = GeneticAlgorithm(num_population, num_iteration)
+        except ValueError:
+            print("Input should be a number.")
+            return
     else:
         print("Pilihan tidak valid.")
         return
-
+    
     if inp == 6:
         vis = solve_cube.best_per_iteration
         solve_cube.solve()
-        end_time = time.time() 
-        duration = end_time - start_time
-        print(f"Algorithm Duration: {duration:.4f} seconds")
     else:
         solve_cube.print_value()
         list_swap, init= solve_cube.solve()

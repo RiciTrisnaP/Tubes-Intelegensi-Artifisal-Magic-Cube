@@ -3,7 +3,7 @@ from algorithm.HillClimbingSearch import *
 import matplotlib.pyplot as plt
 
 class RandomRestartHillClimbing:
-    def __init__(self, n, max_restarts):
+    def __init__(self, max_restarts, n=5):
         self.n = n
         self.max_restarts = max_restarts
         self.cube = Cube(5)
@@ -41,7 +41,8 @@ class RandomRestartHillClimbing:
 
         self.cube = cube.cube
         
-        print("Jumlah restart: ", self.restart)
+        
+        print("Number of restarts: ", self.restart)
         self.plot_value()
         return listSwaps, listInits 
 
