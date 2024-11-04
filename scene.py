@@ -10,6 +10,11 @@ from algorithm.RandomRestartHillClimbing import *
 from algorithm.SimulatedAnnealing import *
 
 class CubeWithNumbers(ThreeDScene):
+    def __init__(self, list_swap, init, **kwargs):
+        super().__init__(**kwargs)
+        self.list_swap = list_swap
+        self.init = init
+
     def construct(self):
         # Set up the camera orientation
         self.set_camera_orientation(phi=30 * DEGREES, theta=0 * DEGREES, gamma=90 * DEGREES, frame_center=[0,1,0])
@@ -21,12 +26,6 @@ class CubeWithNumbers(ThreeDScene):
         # Create the 3x3x3 grid of cubes with numbers
         cubes = VGroup()  # Group to hold all small cubes
         cube_dict = {}    # Dictionary to store cube positions for easy access
-
-        # init = Cube(5).data
-        # list_swap = [[1, 83]]
-        
-        stochastic_cube = HillClimbingSearchSteepestAscent(5)
-        list_swap, init = stochastic_cube.solve()
         
          # Start numbering from 1
         count = 0
@@ -38,7 +37,7 @@ class CubeWithNumbers(ThreeDScene):
                     small_cube.shift(x * spacing * RIGHT + y * spacing * UP + z * spacing * OUT)
                     
                     # Create a number for the small cube
-                    number = Text(str(init[x][y][z]), font_size=18, color=WHITE)
+                    number = Text(str(self.init[x][y][z]), font_size=18, color=WHITE)
                     number.move_to(small_cube.get_center())
                     
                     # Group the cube and its number together
@@ -56,7 +55,7 @@ class CubeWithNumbers(ThreeDScene):
         self.wait(2)
         
         
-        for swap_points in list_swap:
+        for swap_points in self.list_swap:
         
             # Example of swapping cubes (let's swap cube 1 and cube 27)
             cubeA = cube_dict[swap_points[0]]
