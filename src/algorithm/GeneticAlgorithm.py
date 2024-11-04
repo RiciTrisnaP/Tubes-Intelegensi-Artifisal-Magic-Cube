@@ -61,14 +61,15 @@ class GeneticAlgorithm:
 
             self.population = new_population
             
+        print("\nRESULT")
         end_time = time.time() 
         duration = end_time - start_time
-        print(f"\n\nGenetic Algorithm Duration: {duration:.4f} seconds")
+        print(f"Genetic Algorithm Duration: {duration:.4f} seconds")
 
         self.two_best_last.append(sorted_population[0].data.copy())
         self.two_best_last.append(sorted_population[1].data.copy())
 
-        print("\nBest value: ", self.best_value)
+        print("Best value: ", self.best_value)
         print("Number of population: ", self.population_size)
         print("Number of iterations: ", self.iteration)
         
@@ -83,7 +84,6 @@ class GeneticAlgorithm:
         total = sum(population_value)
         IsEnd = any(value == 109 for value in population_value)
 
-        print(population_value)
         self.best_value = max(population_value)
 
         if total == 0:

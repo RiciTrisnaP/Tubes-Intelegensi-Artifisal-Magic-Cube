@@ -19,52 +19,52 @@ def main():
 6. Genetic Algorithm""")  
 
     try:
-        inp = int(input("Pilih Algoritma:"))  
+        inp = int(input("Choose Algorithm:"))  
     except ValueError:
-        print("Input harus berupa angka.")
+        print("Input must be a number.")
         return
     
     if inp == 1:
-        print("\n\nMenjalankan Algoritma Steepest Ascent\n")
+        print("\n\nRunning Steepest Ascent Algorithm\n")
         solve_cube = HillClimbingSearchSteepestAscent() 
     elif inp == 2:
         try:
-            print("\n\nMenjalankan Algoritma Sideways Move\n")
+            print("\n\nRunning Sideways Move Algorithm\n")
             num_max_sideways_moves = int(input("Number of maximum sideways moves: "))
             solve_cube = HillClimbingSidewaysMove(num_max_sideways_moves)
         except ValueError:
-            print("Input should be a number.")
+            print("Input must be a number.")
             return
     elif inp == 3:
         try:
-            print("\n\nMenjalankan Algoritma Random Restart Hill Climbing\n")
+            print("\n\nRunning Random Restart Hill Climbing Algorithm\n")
             num_max_restarts = int(input("Number of maximum restarts: "))
             solve_cube = RandomRestartHillClimbing(num_max_restarts)
         except ValueError:
-            print("Input should be a number.")
+            print("Input must be a number.")
             return
     elif inp == 4:
-        print("\n\nMenjalankan Algoritma Simulated Anealing\n")
+        print("\n\nRunning Simulated Anealing Algorithm\n")
         solve_cube = SimulatedAnnealing()
     elif inp == 5:
         try:
-            print("\n\nMenjalankan Algoritma Stochastic Hill Climbing\n")
+            print("\n\nRunning Stochastic Hill Climbing Algorithm\n")
             num_iteration = int(input("Number of iteration: "))
             solve_cube = StochasticHillClimbing(num_iteration)
         except ValueError:
-            print("Input should be a number.")
+            print("Input must be a number.")
             return
     elif inp == 6:
         try:
-            print("\n\nMenjalankan Algoritma Genetic Algorithm\n")
+            print("\n\nRunning Genetic Algorithm Algorithm\n")
             num_population = int(input("Number of population: "))
             num_iteration = int(input("Number of iteration: "))
             solve_cube = GeneticAlgorithm(num_population, num_iteration)
         except ValueError:
-            print("Input should be a number.")
+            print("Input must be a number.")
             return
     else:
-        print("Pilihan tidak valid.")
+        print("Invalid choice")
         return
     
     if inp == 6:
@@ -75,9 +75,9 @@ def main():
         list_swap, init= solve_cube.solve()
         solve_cube.print_value()
 
-    inp2 = input("Apakah ingin render video? (Y/T): ").strip().lower()
+    inp2 = input("Do you want to render the video? (Y/T): ").strip().lower()
     while inp2 not in ["y", "t"]:
-        inp2 = input("Input tidak valid. Apakah ingin render video? (Y/T): ").strip().lower()
+        inp2 = input("Invalid choice. Do you want to render the video? (Y/T): ").strip().lower()
 
     if (inp2 == "Y" or inp2=="y"):
         if inp == 3: #random restart
