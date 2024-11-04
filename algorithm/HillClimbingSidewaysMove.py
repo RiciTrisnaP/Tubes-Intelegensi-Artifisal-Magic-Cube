@@ -60,6 +60,7 @@ class HillClimbingSidewaysMove:
                 self.cube.swap(best_pos1, best_pos2)
                 self.value = self.cube.calculate_value()
                 sideways_moves_count += 1 
+                list_swap_points.append([self.from_3dpos_to_linearpos(best_pos1), self.from_3dpos_to_linearpos(best_pos2)])
                 print(f"Sideways Move: Swapped {best_pos1} and {best_pos2}. New Value: {self.value}")
                 if sideways_moves_count >= self.max_sideways_moves:
                     print("Maximum sideways moves reached.")
