@@ -5,7 +5,7 @@ from algorithm.Cube import *
 import copy
 
 class SimulatedAnnealing:
-    def __init__(self, n, max_iterations=10000, initial_temperature=1000, cooling_rate=0.99):
+    def __init__(self, n, max_iterations=1000, initial_temperature=1000, cooling_rate=0.99):
         self.cube = Cube(n)
         self.initial_temperature = initial_temperature
         self.cooling_rate = cooling_rate
@@ -72,7 +72,6 @@ class SimulatedAnnealing:
         self.cube.print_value()
 
     def plot_value(self, initial_cube_data, final_cube_data):
-        # Cube plot
         fig1 = plt.figure(figsize=(12, 6))
         ax1 = fig1.add_subplot(121, projection='3d') 
         self.cube.plot_number_cube(ax1, initial_cube_data, "Initial Configuration")
@@ -82,13 +81,23 @@ class SimulatedAnnealing:
         ax2.view_init(elev=30, azim=30)
         plt.tight_layout() 
 
-        # Graph plot
-        plt.figure(figsize=(12, 6))
-        plt.plot(self.values, marker='o', linestyle='-', color='b')
-        plt.title("Cube Value Through Hill Climbing Steepest Ascent")
-        plt.xlabel("Iteration")
-        plt.ylabel("Value")
-        plt.grid()
+        fig2, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
 
+        filtered_probabilities = [prob for prob in self.probabilities if prob < 1.0]
+        filtered_indices = [idx for idx, prob in enumerate(self.probabilities) if prob < 1.0]
+        
+        ax1.plot(filtered_indices, filtered_probabilities, label='Probability (ΔE < 0)', linestyle='-')
+        ax1.set_title("Probability Values When ΔE < 0")
+        ax1.set_xlabel("Iteration")
+        ax1.set_ylabel("Probability Values")
+        ax1.grid()
+        ax1.legend()
+
+        ax2.plot(self.values, color='g', label='Cube Value', linestyle='-')
+        ax2.set_title("Cube Values Throughout Simulated Annealing")
+        ax2.set_xlabel("Iteration")
+        ax2.set_ylabel("Cube Value")
+        ax2.grid()
+        ax2.legend()
+        
         plt.show()
-
