@@ -98,16 +98,20 @@ class Cube:
     
     def plot_number_cube(self, ax, cube_data, title):
         spacing = 1
+        colors = ['red', 'blue', 'green', 'purple', 'orange']
+         
         for i in range(self.n):
             for j in range(self.n):
                 for k in range(self.n):
                     x_center = i * spacing + spacing / 2
                     y_center = j * spacing + spacing / 2
                     z_center = k * spacing + spacing / 2
+                    
+                    color = colors[k % len(colors)]
 
                     # Plot the number in the center
                     ax.text(x_center, y_center, z_center, str(cube_data[i, j, k]),
-                            ha='center', va='center', color='black', fontsize=10)
+                            ha='center', va='center',  color=color, fontsize=10)
 
         ax.set_xlim([0, self.n])
         ax.set_ylim([0, self.n])
