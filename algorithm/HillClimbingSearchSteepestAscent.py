@@ -32,7 +32,7 @@ class HillClimbingSearchSteepestAscent:
                     new_value = self.cube.calculate_value()
 
                     if new_value > max_value:
-                        # print(f"Better Value Found: {new_value} by swapping {pos1} and {pos2}")
+                        print(f"Better Value Found: {new_value} by swapping {pos1} and {pos2}")
                         max_value = new_value
                         max_pos1 = pos1
                         max_pos2 = pos2
@@ -72,7 +72,7 @@ class HillClimbingSearchSteepestAscent:
     def plot_value(self):
         plt.figure(figsize=(12, 6))
         plt.plot(self.values, marker='o', linestyle='-', color='b')
-        plt.title("Cube Value Through Hill Climbing Iterations")
+        plt.title("Cube Value Through Hill Climbing Steepest Ascent Iterations")
         plt.xlabel("Iteration")
         plt.ylabel("Cube Value")
         plt.grid()

@@ -35,7 +35,7 @@ def main():
     elif inp == 5:
         solve_cube = StochasticHillClimbing(5,30)
     elif inp == 6:
-        solve_cube = GeneticAlgorithm()
+        solve_cube = GeneticAlgorithm(5, 1000, 5)
     else:
         print("Pilihan tidak valid.")
         return
