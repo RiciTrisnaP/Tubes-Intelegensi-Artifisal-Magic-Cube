@@ -8,6 +8,8 @@ from algorithm.RandomRestartHillClimbing import *
 from algorithm.SimulatedAnnealing import *
 from scene import CubeWithNumbers
 from sceneRandomRestart import CubeWithNumbersRR
+from sceneGenetic import CubeGenetic
+
 
 def main():
     start_time = time.time()
@@ -42,17 +44,17 @@ def main():
         solve_cube = StochasticHillClimbing(5,10000) #render aman
     elif inp == 6:
         print("\n\nMenjalankan Algoritma Genetic Algorithm\n")
-        solve_cube = GeneticAlgorithm(10, 1000, 5)
+        solve_cube = GeneticAlgorithm(10, 10, 5)
     else:
         print("Pilihan tidak valid.")
         return
 
     if inp == 6:
+        vis = solve_cube.best_per_iteration
         solve_cube.solve()
         end_time = time.time() 
         duration = end_time - start_time
         print(f"Algorithm Duration: {duration:.4f} seconds")
-        return
     else:
         solve_cube.print_value()
         list_swap, init= solve_cube.solve()
@@ -70,6 +72,9 @@ def main():
     if (inp2 == "Y" or inp2=="y"):
         if inp == 3: #random restart
             scene = CubeWithNumbersRR(list_swap, init)
+            scene.render()
+        elif inp == 6: #GA
+            scene = CubeGenetic(vis)
             scene.render()
         else:
             scene = CubeWithNumbers(list_swap, init)
