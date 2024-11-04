@@ -9,6 +9,9 @@ class RandomRestartHillClimbing:
         self.cube = Cube(5)
         self.all_values = []
         self.restart = 0
+        self.best_initial_state = []
+        self.best_final_state = []
+        self.best_value = 0
 
     def solve(self):
         listSwaps = []
@@ -27,6 +30,11 @@ class RandomRestartHillClimbing:
 
             self.all_values.append(cube.list_of_values())
 
+            if cube.getCurrentValue() >= self.best_value:
+                self.best_value = cube.getCurrentValue()
+                self.best_initial_state = cube.getInitialState()
+                self.best_final_state = cube.getFinalState()
+            
             if (cube.getCurrentValue() == 109):
                 print("Solved")
                 break
@@ -44,9 +52,9 @@ class RandomRestartHillClimbing:
         # Cube plot
         fig1 = plt.figure(figsize=(12, 6))
         ax1 = fig1.add_subplot(121, projection='3d') 
-        self.cube.plot_number_cube(ax1, initial_cube_data, "Initial Configuration")
+        self.plot_number_cube(ax1, self.best_initial_state, "Best Initial Configuration")
         ax2 = fig1.add_subplot(122, projection='3d')
-        self.cube.plot_number_cube(ax2, final_cube_data, "Final Configuration")
+        self.plot_number_cube(ax2, self.best_final_state, "Best Final Configuration")
         ax1.view_init(elev=30, azim=30)
         ax2.view_init(elev=30, azim=30)
         plt.tight_layout() 
@@ -63,3 +71,19 @@ class RandomRestartHillClimbing:
         plt.grid()
         plt.tight_layout()
         plt.show()
+    
+    def plot_number_cube(self, ax, cube_data, title):
+        for i in range(self.n):
+            for j in range(self.n):
+                for k in range(self.n):
+                    ax.text(i, j, k, str(cube_data[i, j, k]),
+                            color='black', fontsize=8, ha='center', va='center', alpha=1.0)
+
+        ax.set_xlim([0, self.n])
+        ax.set_ylim([0, self.n])
+        ax.set_zlim([0, self.n])
+
+        ax.set_xlabel('X Axis')
+        ax.set_ylabel('Y Axis')
+        ax.set_zlabel('Z Axis')
+        ax.set_title(title)

@@ -70,6 +70,12 @@ class HillClimbingSearch:
     
     def getCurrentValue(self):
         return self.current_value
+    
+    def getInitialState(self):
+        return self.initial_state
+
+    def getFinalState(self):
+        return self.final_state
 
     def list_of_values(self):
         return self.values
