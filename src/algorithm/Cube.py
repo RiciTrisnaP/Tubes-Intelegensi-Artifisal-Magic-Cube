@@ -85,10 +85,14 @@ class Cube:
         return [random.randint(0, self.n - 1) for _ in range(3)]
     
     def print_value(self):
-        for i in range (self.n):
-            for j in range (self.n):
-                for k in range (self.n):
-                    print(self.data[i,j,k],end=" ")
+        counter = 0
+        for i in range(self.n):
+            for j in range(self.n):
+                for k in range(self.n):
+                    print(self.data[i, j, k], end=" ")
+                    counter += 1
+                    if counter % 25 == 0:
+                        print() 
         print()
     
     

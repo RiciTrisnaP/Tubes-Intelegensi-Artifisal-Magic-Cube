@@ -67,9 +67,9 @@ class StochasticHillClimbing:
         # Graph plot
         plt.figure(figsize=(12, 6))
         plt.plot(self.values, linestyle='-')
-        plt.title("Cube Value Through Stochastic Hill Climbing")
+        plt.title("Stochastic Hill Climbing")
         plt.xlabel("Iteration")
-        plt.ylabel("Value")
+        plt.ylabel("Objective Function Value")
         plt.grid()
 
         plt.show()

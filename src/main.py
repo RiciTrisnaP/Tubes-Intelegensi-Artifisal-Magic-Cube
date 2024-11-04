@@ -25,11 +25,11 @@ def main():
         return
     
     if inp == 1:
-        print("\n\nRunning Steepest Ascent Algorithm\n")
+        print("\nRunning Steepest Ascent Algorithm\n")
         solve_cube = HillClimbingSearchSteepestAscent() 
     elif inp == 2:
         try:
-            print("\n\nRunning Sideways Move Algorithm\n")
+            print("\nRunning Sideways Move Algorithm\n")
             num_max_sideways_moves = int(input("Number of maximum sideways moves: "))
             solve_cube = HillClimbingSidewaysMove(num_max_sideways_moves)
         except ValueError:
@@ -37,18 +37,18 @@ def main():
             return
     elif inp == 3:
         try:
-            print("\n\nRunning Random Restart Hill Climbing Algorithm\n")
+            print("\nRunning Random Restart Hill Climbing Algorithm\n")
             num_max_restarts = int(input("Number of maximum restarts: "))
             solve_cube = RandomRestartHillClimbing(num_max_restarts)
         except ValueError:
             print("Input must be a number.")
             return
     elif inp == 4:
-        print("\n\nRunning Simulated Anealing Algorithm\n")
+        print("\nRunning Simulated Anealing Algorithm\n")
         solve_cube = SimulatedAnnealing()
     elif inp == 5:
         try:
-            print("\n\nRunning Stochastic Hill Climbing Algorithm\n")
+            print("\nRunning Stochastic Hill Climbing Algorithm\n")
             num_iteration = int(input("Number of iteration: "))
             solve_cube = StochasticHillClimbing(num_iteration)
         except ValueError:
@@ -56,7 +56,7 @@ def main():
             return
     elif inp == 6:
         try:
-            print("\n\nRunning Genetic Algorithm Algorithm\n")
+            print("\nRunning Genetic Algorithm Algorithm\n")
             num_population = int(input("Number of population: "))
             num_iteration = int(input("Number of iteration: "))
             solve_cube = GeneticAlgorithm(num_population, num_iteration)
@@ -71,8 +71,10 @@ def main():
         vis = solve_cube.best_per_iteration
         solve_cube.solve()
     else:
+        print("Initial State:")
         solve_cube.print_value()
         list_swap, init= solve_cube.solve()
+        print("Last State:")
         solve_cube.print_value()
 
     inp2 = input("Do you want to render the video? (Y/T): ").strip().lower()
