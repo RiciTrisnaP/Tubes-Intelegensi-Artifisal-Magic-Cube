@@ -106,14 +106,38 @@ class GeneticAlgorithm:
         return self.population[-1]
 
     def crossover(self, parent1, parent2):
+        # Flatten parent data arrays
         temp1 = np.array(parent1.data).reshape(125)
         temp2 = np.array(parent2.data).reshape(125)
-        crossover_point = random.randint(1, 124)
+        
+        start, end = sorted(random.sample(range(125), 2))
+        
+        offspring1 = [None] * 125
+        offspring2 = [None] * 125
+        
+        offspring1[start:end] = temp1[start:end]
+        offspring2[start:end] = temp2[start:end]
+        
+        def fill_offspring(offspring, parent_data, start, end):
+            current_pos = end
+            for val in parent_data:
+                if val not in offspring:
+                    if current_pos >= 125:
+                        current_pos = 0
+                    while start <= current_pos < end:
+                        current_pos += 1
+                    offspring[current_pos] = val
+                    current_pos += 1
+            return offspring
 
-        offspring1 = np.concatenate((temp1[:crossover_point], temp2[crossover_point:]))
-        offspring2 = np.concatenate((temp2[:crossover_point], temp1[crossover_point:]))
+        offspring1 = fill_offspring(offspring1, temp2, start, end)
+        offspring2 = fill_offspring(offspring2, temp1, start, end)
+
+        offspring1 = np.array(offspring1).reshape(5, 5, 5)
+        offspring2 = np.array(offspring2).reshape(5, 5, 5)
 
         return offspring1, offspring2
+
 
     def mutation(self, individual):
         mutated = individual.flatten()

@@ -56,7 +56,7 @@ def main():
             return
     elif inp == 6:
         try:
-            print("\nRunning Genetic Algorithm Algorithm\n")
+            print("\nRunning Genetic Algorithm\n")
             num_population = int(input("Number of population: "))
             num_iteration = int(input("Number of iteration: "))
             solve_cube = GeneticAlgorithm(num_population, num_iteration)
