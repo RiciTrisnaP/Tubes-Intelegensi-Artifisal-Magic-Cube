@@ -25,16 +25,22 @@ def main():
         return
     
     if inp == 1:
+        print("\n\nMenjalankan Algoritma Steepest Ascent\n")
         solve_cube = HillClimbingSearchSteepestAscent(5)
     elif inp == 2:
+        print("\n\nMenjalankan Algoritma Sideways Move\n")
         solve_cube = HillClimbingSidewaysMove(5,10)
     elif inp == 3:
+        print("\n\nMenjalankan Algoritma Random Restart Hill Climbing\n")
         solve_cube = RandomRestartHillClimbing(5,3)
     elif inp == 4:
+        print("\n\nMenjalankan Algoritma Simulated Anealing\n")
         solve_cube = SimulatedAnnealing(5)
     elif inp == 5:
-        solve_cube = StochasticHillClimbing(5,30)
+        print("\n\nMenjalankan Algoritma Stochastic Hill Climbing\n")
+        solve_cube = StochasticHillClimbing(5,10000)
     elif inp == 6:
+        print("\n\nMenjalankan Algoritma Genetic Algorithm\n")
         solve_cube = GeneticAlgorithm(5, 1000, 5)
     else:
         print("Pilihan tidak valid.")
