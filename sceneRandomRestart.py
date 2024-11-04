@@ -22,7 +22,15 @@ class CubeWithNumbers(ThreeDScene):
         cubes = VGroup()  # Group to hold all small cubes
         cube_dict = {}    # Dictionary to store cube positions for easy access
 
-        # init = Cube(5).data
+        # list_swaps = []
+        # list_inits = []
+
+        # for i in range (4):
+        #     # swap = [1,25]
+        #     temp = Cube(5).data
+        #     # list_swaps.append(swap)
+        #     list_inits.append(temp)
+        
         # list_swap = [[1, 83]]
         
         stochastic_cube = RandomRestartHillClimbing(5, 2)
@@ -58,7 +66,6 @@ class CubeWithNumbers(ThreeDScene):
             self.begin_ambient_camera_rotation(rate=0, about="phi")
             self.wait(2)
             
-            
             for swap_points in swap:
             
                 # Example of swapping cubes (let's swap cube 1 and cube 27)
@@ -92,3 +99,6 @@ class CubeWithNumbers(ThreeDScene):
                 self.wait(1)
                 
             self.remove(cubes)
+            cubes = VGroup()
+            
+            
