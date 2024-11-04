@@ -41,6 +41,16 @@ class RandomRestartHillClimbing:
         self.cube.print_value()
 
     def plot_value(self):
+        # Cube plot
+        fig1 = plt.figure(figsize=(12, 6))
+        ax1 = fig1.add_subplot(121, projection='3d') 
+        self.cube.plot_number_cube(ax1, initial_cube_data, "Initial Configuration")
+        ax2 = fig1.add_subplot(122, projection='3d')
+        self.cube.plot_number_cube(ax2, final_cube_data, "Final Configuration")
+        ax1.view_init(elev=30, azim=30)
+        ax2.view_init(elev=30, azim=30)
+        plt.tight_layout() 
+        
         plt.figure(figsize=(12, 6))
 
         for i, values in enumerate(self.all_values):

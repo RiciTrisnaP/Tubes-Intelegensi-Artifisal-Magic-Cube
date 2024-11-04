@@ -1,5 +1,6 @@
 from algorithm.Cube import *
 import matplotlib.pyplot as plt
+import copy
 
 class HillClimbingSearch:
     def __init__(self, n):
@@ -8,12 +9,14 @@ class HillClimbingSearch:
         self.values = []
         self.current_value = 0
         self.iteration = 0
+        self.initial_state = []
+        self.final_state = []
     
     def solve(self):
         self.current_value = self.cube.calculate_value()
         print(f"Initial Value: {self.current_value}")
         
-        initial_config = self.cube.data
+        initial_config = copy.deepcopy(self.cube.data)
         list_swap_points = []
 
         while True:
@@ -44,6 +47,9 @@ class HillClimbingSearch:
             if not better_found:
                 print("No further improvement found. Terminating search.")
                 break
+        
+        self.initial_state = initial_config
+        self.final_state = self.cube.data
         
         return list_swap_points, initial_config
 
