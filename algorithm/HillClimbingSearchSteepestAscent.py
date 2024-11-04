@@ -33,7 +33,7 @@ class HillClimbingSearchSteepestAscent:
                     new_value = self.cube.calculate_value()
 
                     if new_value > max_value:
-                        print(f"Better Value Found: {new_value} by swapping {pos1} and {pos2}")
+                        # print(f"Better Value Found: {new_value} by swapping {pos1} and {pos2}")
                         max_value = new_value
                         max_pos1 = pos1
                         max_pos2 = pos2
@@ -53,7 +53,8 @@ class HillClimbingSearchSteepestAscent:
                 print(f"Maximum iteration: {self.iterasi}")
                 break 
         
-        print("\nIterasi: ", self.iterasi)
+        print("\nBest value: ", self.values[-1])
+        print("Number of iterations: ", self.iterasi)
         self.plot_value(initial_config, self.cube.data)
         return list_swap_points,initial_config
 

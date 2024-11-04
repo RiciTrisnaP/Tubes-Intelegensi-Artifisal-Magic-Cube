@@ -89,6 +89,7 @@ class Cube:
             for j in range (self.n):
                 for k in range (self.n):
                     print(self.data[i,j,k],end=" ")
+        print()
     
     
     def plot_number_cube(self, ax, cube_data, title):

@@ -18,7 +18,7 @@ class RandomRestartHillClimbing:
         listInits = []
         
         for i in range(self.max_restarts):
-            print(f"Random Restart Hill Climbing iteration-{i + 1}")
+            print(f"\nRandom Restart Hill Climbing iteration {i + 1}")
             self.restart += 1
             
             cube = HillClimbingSearch(5)
@@ -26,7 +26,7 @@ class RandomRestartHillClimbing:
             listSwaps.append(tempSwap)
             listInits.append(tempInit)
 
-            print(f"Random Restart Hill Climbing iteration-{i + 1} with iterations-{cube.getIterations()}")
+            print(f"\nHill Climbing with {cube.getIterations()} iterations and best value {cube.getCurrentValue()}")
 
             self.all_values.append(cube.list_of_values())
 
@@ -41,8 +41,8 @@ class RandomRestartHillClimbing:
 
         self.cube = cube.cube
         
-        
-        print("Number of restarts: ", self.restart)
+
+        print("\nNumber of restarts: ", self.restart)
         self.plot_value()
         return listSwaps, listInits 
 
