@@ -1,6 +1,7 @@
 from algorithm.Cube import *
 from algorithm.HillClimbingSearch import *
 import matplotlib.pyplot as plt
+import time
 
 class RandomRestartHillClimbing:
     def __init__(self, max_restarts, n=5):
@@ -17,6 +18,8 @@ class RandomRestartHillClimbing:
         listSwaps = []
         listInits = []
         
+        start_time = time.time()
+
         for i in range(self.max_restarts):
             print(f"\nRandom Restart Hill Climbing iteration {i + 1}")
             self.restart += 1
@@ -39,9 +42,12 @@ class RandomRestartHillClimbing:
                 print("Solved")
                 break
 
+        end_time = time.time() 
+        duration = end_time - start_time
+        print(f"\n\nSteepest Ascent Algorithm Duration: {duration:.4f} seconds")
+
         self.cube = cube.cube
         
-
         print("\nNumber of restarts: ", self.restart)
         self.plot_value()
         return listSwaps, listInits 

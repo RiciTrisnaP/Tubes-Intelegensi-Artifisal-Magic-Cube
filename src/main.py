@@ -1,4 +1,3 @@
-import time
 from algorithm.StochasticHillClimbing import *
 from algorithm.GeneticAlgorithm import *
 from algorithm.HillClimbingSearch import *
@@ -12,8 +11,6 @@ from sceneGenetic import CubeGenetic
 
 
 def main():
-    start_time = time.time()
-
     print("""1. Steepest Ascent
 2. Sideways Move
 3. Random Restart Hill Climbing
@@ -77,11 +74,6 @@ def main():
         solve_cube.print_value()
         list_swap, init= solve_cube.solve()
         solve_cube.print_value()
-
-    end_time = time.time() 
-    duration = end_time - start_time
-    print(f"\n\nAlgorithm Duration: {duration:.4f} seconds")
-
 
     inp2 = input("Apakah ingin render video? (Y/T): ").strip().lower()
     while inp2 not in ["y", "t"]:

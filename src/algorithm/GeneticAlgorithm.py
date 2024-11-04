@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 from algorithm.Cube import Cube
+import time
 
 class GeneticAlgorithm:
     def __init__(self, population_size, nmax, n = 5, elite_count=1, crossover_rate=0.8, mutation_rate=0.1):
@@ -25,6 +26,7 @@ class GeneticAlgorithm:
         self.two_best_initial.append(sorted_population[0].data.copy())
         self.two_best_initial.append(sorted_population[1].data.copy())
         
+        start_time = time.time()
         for gen in range(self.nmax):
             self.iteration += 1
             parent_population = []
@@ -59,7 +61,10 @@ class GeneticAlgorithm:
 
             self.population = new_population
             
-            
+        end_time = time.time() 
+        duration = end_time - start_time
+        print(f"\n\nGenetic Algorithm Duration: {duration:.4f} seconds")
+
         self.two_best_last.append(sorted_population[0].data.copy())
         self.two_best_last.append(sorted_population[1].data.copy())
 

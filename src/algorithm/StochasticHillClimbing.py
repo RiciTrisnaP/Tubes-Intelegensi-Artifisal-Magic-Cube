@@ -1,6 +1,7 @@
 from algorithm.Cube import *
 import matplotlib.pyplot as plt
 import copy
+import time
 
 class StochasticHillClimbing:
     def __init__(self, iterations, n=5):
@@ -13,6 +14,8 @@ class StochasticHillClimbing:
         
     def solve(self):
         initial_configuration = copy.deepcopy(self.cube.data)
+
+        start_time = time.time()
         
         for i in range(self.iterations):
             self.num_iterations += 1
@@ -20,6 +23,10 @@ class StochasticHillClimbing:
             if end:
                 break
         
+        end_time = time.time() 
+        duration = end_time - start_time
+        print(f"\n\nSteepest Ascent Algorithm Duration: {duration:.4f} seconds")
+
         print("\nBest value: ", self.values[-1])
         print("Number of iterations: ", self.num_iterations)
 

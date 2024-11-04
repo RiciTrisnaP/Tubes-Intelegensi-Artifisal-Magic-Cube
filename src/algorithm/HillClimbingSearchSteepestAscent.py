@@ -1,6 +1,7 @@
 from algorithm.Cube import *
 import matplotlib.pyplot as plt
 import copy
+import time
 
 class HillClimbingSearchSteepestAscent: 
     def __init__(self, n=5):
@@ -16,6 +17,8 @@ class HillClimbingSearchSteepestAscent:
         
         initial_config = copy.deepcopy(self.cube.data)
         list_swap_points = []
+        
+        start_time = time.time()
         
         while True:
             self.values.append(self.value)
@@ -53,6 +56,10 @@ class HillClimbingSearchSteepestAscent:
                 print(f"Maximum iteration: {self.iterasi}")
                 break 
         
+        end_time = time.time() 
+        duration = end_time - start_time
+        print(f"\n\nSteepest Ascent Algorithm Duration: {duration:.4f} seconds")
+
         print("\nBest value: ", self.values[-1])
         print("Number of iterations: ", self.iterasi)
         self.plot_value(initial_config, self.cube.data)

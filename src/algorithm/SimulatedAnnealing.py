@@ -3,6 +3,7 @@ import random
 import matplotlib.pyplot as plt
 from algorithm.Cube import *
 import copy
+import time
 
 class SimulatedAnnealing:
     def __init__(self, max_iterations=100, initial_temperature=1000, cooling_rate=0.99, n=5):
@@ -20,6 +21,9 @@ class SimulatedAnnealing:
 
     def solve(self):
         initial_config = copy.deepcopy(self.cube.data)
+
+        start_time = time.time()
+
         while True and self.iteration < self.max_iterations:
             T = self.temperature(self.iteration)
             if T <= 0:
@@ -31,6 +35,10 @@ class SimulatedAnnealing:
             self.values.append(current_value)
 
             self.iteration += 1
+        
+        end_time = time.time() 
+        duration = end_time - start_time
+        print(f"\n\nSteepest Ascent Algorithm Duration: {duration:.4f} seconds")
 
         print("\nLast value: ", self.values[-1])
         print("Number of stucks: ", self.stuck, end = "\n\n")
