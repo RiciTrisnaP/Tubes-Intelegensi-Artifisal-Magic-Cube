@@ -53,7 +53,7 @@ class HillClimbingSearchSteepestAscent:
                 break 
         
         print("\nIterasi: ", self.iterasi)
-        # self.plot_value()
+        self.plot_value()
         return list_swap_points,initial_config
 
     def linearpos_to_3dpos(self, num):

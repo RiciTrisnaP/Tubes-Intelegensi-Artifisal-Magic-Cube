@@ -16,7 +16,7 @@ class GeneticAlgorithm:
         self.mean_values = []
         self.iteration = 0
         
-    def main_ga(self):
+    def solve(self):
         for gen in range(self.nmax):
             self.iteration += 1
             parent_population = []

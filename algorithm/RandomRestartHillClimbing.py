@@ -32,6 +32,7 @@ class RandomRestartHillClimbing:
         self.cube = cube
         
         print("Jumlah restart: ", self.restart)
+        self.plot_value()
         return listSwaps, listInits 
 
     def print_value(self):

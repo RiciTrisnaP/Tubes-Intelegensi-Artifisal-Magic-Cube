@@ -47,7 +47,6 @@ def main():
         list_swap, init= solve_cube.solve()
         solve_cube.print_value()
 
-    solve_cube.plot_value()
     end_time = time.time() 
     duration = end_time - start_time
     print(f"Algorithm Duration: {duration:.4f} seconds")
