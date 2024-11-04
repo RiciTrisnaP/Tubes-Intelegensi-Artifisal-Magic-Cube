@@ -44,24 +44,25 @@ class StochasticHillClimbing:
         return pos[0] * (self.n**2) + pos[1] * (self.n) + pos[2]
     
     def plot_value(self, initial_cube_data, final_cube_data):
-        fig = plt.figure(figsize=(12, 12))
-
-        ax1 = fig.add_subplot(221, projection='3d')
+        # Cube plot
+        fig1 = plt.figure(figsize=(12, 6))
+        ax1 = fig1.add_subplot(121, projection='3d') 
         self.plot_number_cube(ax1, initial_cube_data, "Initial Configuration")
-
-        ax2 = fig.add_subplot(222, projection='3d')
+        ax2 = fig1.add_subplot(122, projection='3d')
         self.plot_number_cube(ax2, final_cube_data, "Final Configuration")
+        ax1.view_init(elev=30, azim=30)
+        ax2.view_init(elev=30, azim=30)
+        plt.tight_layout() 
 
-        plt.subplots_adjust(hspace=0.4)
+        # Graph plot
+        fig2 = plt.figure(figsize=(12, 6))
+        plt.plot(self.values, marker='o', linestyle='-', color='b')
+        plt.title("Cube Value Through Hill Climbing Iterations")
+        plt.xlabel("Iteration")
+        plt.ylabel("Cube Value")
+        plt.grid()
+        plt.legend()
 
-        ax3 = fig.add_subplot(223)
-        ax3.plot(self.values, marker='o', linestyle='-', color='b')
-        ax3.set_title("Cube Value Through Hill Climbing Iterations")
-        ax3.set_xlabel("Iteration")
-        ax3.set_ylabel("Cube Value")
-        ax3.grid()
-
-        plt.tight_layout()
         plt.show()
 
     def plot_number_cube(self, ax, cube_data, title):
