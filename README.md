@@ -8,7 +8,7 @@ Oleh:
 ### Prerequisites
 
 * ffmpeg (https://www.ffmpeg.org/download.html)
-* Python version > 3.12
+* Python version >= 3.10
 * Pip
 * Git
 
