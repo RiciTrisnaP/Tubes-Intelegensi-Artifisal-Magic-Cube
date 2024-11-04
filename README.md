@@ -1,5 +1,5 @@
 ## Tugas Besar 1 Intelegensi Artifisial
-Oleh:
+Oleh Kelompok 10 yang beranggotakan:
 1. Rici Trisna Putra (13522026)
 2. Francesco Michael Kusuma (13522038)
 3. Keanu Amadeus Gonza Wrahatno (13522082)
