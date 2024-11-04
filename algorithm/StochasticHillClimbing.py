@@ -32,11 +32,10 @@ class StochasticHillClimbing:
         self.cube.swap(pos1, pos2)
         neighbor_value = self.cube.calculate_value()
 
-        print("pos1:", pos1, "pos2:", pos2, "current value:", current_value, "neighbor value:", neighbor_value)
-
         if current_value >= neighbor_value:
             self.cube.swap(pos1, pos2)
         else:
+            print(f"Swap {pos1} and {pos2}, current value = {current_value}")
             self.list_swap_points.append([self.from_3dpos_to_linearpos(pos1), self.from_3dpos_to_linearpos(pos2)])
         
         return neighbor_value == 109
