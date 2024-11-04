@@ -34,6 +34,7 @@ class StochasticHillClimbing:
 
         if current_value >= neighbor_value:
             self.cube.swap(pos1, pos2)
+        else:
             self.list_swap_points.append([self.from_3dpos_to_linearpos(pos1), self.from_3dpos_to_linearpos(pos2)])
         
         return neighbor_value == 109
@@ -57,11 +58,10 @@ class StochasticHillClimbing:
 
         # Graph plot
         plt.figure(figsize=(12, 6))
-        plt.plot(self.values, marker='o', linestyle='-', color='b')
-        plt.title("Cube Value Through Hill Climbing Iterations")
+        plt.plot(self.values, linestyle='-')
+        plt.title("Cube Value Through Stochastic Hill Climbing")
         plt.xlabel("Iteration")
-        plt.ylabel("Cube Value")
+        plt.ylabel("Value")
         plt.grid()
-        plt.legend()
 
         plt.show()

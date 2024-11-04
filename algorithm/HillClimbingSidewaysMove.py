@@ -1,6 +1,7 @@
 from algorithm.Cube import *
 import matplotlib.pyplot as plt
 import random
+import copy
 
 class HillClimbingSidewaysMove:
     def __init__(self, n, max_sideways_moves):
@@ -16,8 +17,9 @@ class HillClimbingSidewaysMove:
         print(f"Initial Value: {self.value}")
         sideways_moves_count = 0
         
-        initial_config = self.cube.data
+        initial_config = copy.deepcopy(self.cube.data)
         list_swap_points = []
+        sideways_moves = [] 
 
         while True:
             self.values.append(self.value)
@@ -25,10 +27,6 @@ class HillClimbingSidewaysMove:
             max_pos1 = None
             max_pos2 = None
             found_better = False
-            sideways_moves = []
-            
-            initial_config = self.cube.data
-            list_swap_points = []
 
             for i in range(self.n**3):
                 for j in range(i + 1, self.n**3):
@@ -71,7 +69,7 @@ class HillClimbingSidewaysMove:
                 break
         
         print("\nIterasi: ", self.iterasi)
-        self.plot_value()
+        self.plot_value(initial_config, self.cube.data)
         return list_swap_points, initial_config
 
     def linearpos_to_3dpos(self, num):
@@ -86,12 +84,23 @@ class HillClimbingSidewaysMove:
     def print_value(self):
         self.cube.print_value()
     
-    def plot_value(self):
+    def plot_value(self, initial_cube_data, final_cube_data):
+        # Cube plot
+        fig1 = plt.figure(figsize=(12, 6))
+        ax1 = fig1.add_subplot(121, projection='3d') 
+        self.cube.plot_number_cube(ax1, initial_cube_data, "Initial Configuration")
+        ax2 = fig1.add_subplot(122, projection='3d')
+        self.cube.plot_number_cube(ax2, final_cube_data, "Final Configuration")
+        ax1.view_init(elev=30, azim=30)
+        ax2.view_init(elev=30, azim=30)
+        plt.tight_layout() 
+
+        # Graph plot
         plt.figure(figsize=(12, 6))
         plt.plot(self.values, marker='o', linestyle='-', color='b')
-        plt.title("Cube Value Through Hill Climbing Side Ways Move Iterations")
+        plt.title("Cube Value Through Hill Climbing Sideways Move Ascent")
         plt.xlabel("Iteration")
-        plt.ylabel("Cube Value")
+        plt.ylabel("Value")
         plt.grid()
-        plt.tight_layout()
+
         plt.show()
