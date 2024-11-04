@@ -8,15 +8,11 @@ class Cube:
         self.data = self.generate_random_config(n)
 
     def generate_random_config(self, n):
-        # Generate a list of unique numbers from 1 to n^3
         unique_numbers = random.sample(range(1, (n ** 3) + 1), n ** 3)
-        
-        # Create a n x n x n data and fill it with unique random integers
         data = np.array(unique_numbers).reshape((n, n, n))
         return data
 
     def swap(self, pos1, pos2):
-        # Swap the values at the specified positions in the data
         temp = self.data[pos1[0], pos1[1], pos1[2]]
         self.data[pos1[0], pos1[1], pos1[2]] = self.data[pos2[0], pos2[1], pos2[2]]
         self.data[pos2[0], pos2[1], pos2[2]] = temp
@@ -54,26 +50,22 @@ class Cube:
 
     def calculate_side_diagonal_value(self):
         total = 0
-        
-        # Check side diagonals for each z layer
         for z in range(self.n):
-            if np.sum(self.data[z, np.arange(self.n), np.arange(self.n)]) == self.magic_number:  # Primary diagonal
+            if np.sum(self.data[z, np.arange(self.n), np.arange(self.n)]) == self.magic_number:  
                 total += 1
-            if np.sum(self.data[z, np.arange(self.n), np.arange(self.n - 1, -1, -1)]) == self.magic_number:  # Secondary diagonal
+            if np.sum(self.data[z, np.arange(self.n), np.arange(self.n - 1, -1, -1)]) == self.magic_number:  
                 total += 1
 
-        # Other checks: for y orientation (changing z)
         for y in range(self.n):
-            if np.sum(self.data[np.arange(self.n), y, np.arange(self.n)]) == self.magic_number:  # Primary diagonal
+            if np.sum(self.data[np.arange(self.n), y, np.arange(self.n)]) == self.magic_number:  
                 total += 1
-            if np.sum(self.data[np.arange(self.n), y, np.arange(self.n - 1, -1, -1)]) == self.magic_number:  # Secondary diagonal
+            if np.sum(self.data[np.arange(self.n), y, np.arange(self.n - 1, -1, -1)]) == self.magic_number:  
                 total += 1
         
-        # Other checks: for x orientation (changing y)
         for i in range(self.n):
-            if np.sum(self.data[np.arange(self.n), np.arange(self.n), i]) == self.magic_number:  # Primary diagonal
+            if np.sum(self.data[np.arange(self.n), np.arange(self.n), i]) == self.magic_number:  
                 total += 1
-            if np.sum(self.data[np.arange(self.n - 1, -1, -1), np.arange(self.n), i]) == self.magic_number:  # Secondary diagonal
+            if np.sum(self.data[np.arange(self.n - 1, -1, -1), np.arange(self.n), i]) == self.magic_number:  
                 total += 1
 
         return total
